@@ -1,4 +1,4 @@
-package com.example.microservice3.controller;
+package com.example.microservice5.controller;
 
 import com.example.microservice5.entity.Performance;
 import com.example.microservice5.service.PerfermonceService;
@@ -13,7 +13,7 @@ import java.util.List;
 public class PerformanceController {
 
     PerfermonceService performanceService;
-
+/*
     // Ajouter une nouvelle performance
     @PostMapping
     public Performance addPerformance(@RequestBody Performance performance) {
@@ -43,4 +43,36 @@ public class PerformanceController {
     public void deletePerformance(@PathVariable Long id) {
         performanceService.deletePerformance(id);
     }
+    */
+
+    // ✅ 1. Ajouter une performance à un employé
+    @PostMapping(path = "/add_performance/{employeeId}")
+    Performance addPerformance(@PathVariable Long employeeId, @RequestBody Performance performance) {
+        return performanceService.affecterPerformance(employeeId, performance);
+    }
+
+    // ✅ 2. Modifier une performance
+    @PutMapping(path = "/update_performance")
+    Performance updatePerformance(@RequestBody Performance performance) {
+        return performanceService.modifierPerformance(performance.getId(), performance);
+    }
+
+    @GetMapping(path = "/get_performances_by_employee/{employeeId}")
+    List<Performance> getPerformancesByEmployee(@PathVariable Long employeeId) {
+        return performanceService.getPerformancesByEmployeeId(employeeId);
+    }
+
+    // ✅ Récupérer toutes les performances de tous les employés
+    @GetMapping(path = "/get_all_performances")
+    List<Performance> getAllPerformances() {
+        return performanceService.getAllPerformances();
+    }
+
+    // ✅ 5. Supprimer une performance
+    @DeleteMapping(path = "/delete_performance/{id}")
+    void deletePerformance(@PathVariable Long id) {
+        performanceService.desaffecterPerformance(id);
+    }
+
+
 }

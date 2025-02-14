@@ -4,7 +4,6 @@ package com.example.microservice5.controller;
 import com.example.microservice5.entity.Employee;
 import com.example.microservice5.service.EmployeeService;
 import lombok.AllArgsConstructor;
-import org.aspectj.lang.annotation.AfterThrowing;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

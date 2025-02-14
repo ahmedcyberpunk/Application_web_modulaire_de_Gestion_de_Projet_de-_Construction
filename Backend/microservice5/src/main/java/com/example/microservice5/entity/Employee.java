@@ -1,5 +1,6 @@
 package com.example.microservice5.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class Employee {
     List<Absence> absences;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @JsonIgnore
     List<Performance> performances;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
