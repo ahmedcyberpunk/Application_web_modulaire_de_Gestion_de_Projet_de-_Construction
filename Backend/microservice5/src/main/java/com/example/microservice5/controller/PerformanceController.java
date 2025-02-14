@@ -45,13 +45,13 @@ public class PerformanceController {
     }
     */
 
-    // ✅ 1. Ajouter une performance à un employé
+
     @PostMapping(path = "/add_performance/{employeeId}")
     Performance addPerformance(@PathVariable Long employeeId, @RequestBody Performance performance) {
         return performanceService.affecterPerformance(employeeId, performance);
     }
 
-    // ✅ 2. Modifier une performance
+
     @PutMapping(path = "/update_performance")
     Performance updatePerformance(@RequestBody Performance performance) {
         return performanceService.modifierPerformance(performance.getId(), performance);
@@ -62,13 +62,13 @@ public class PerformanceController {
         return performanceService.getPerformancesByEmployeeId(employeeId);
     }
 
-    // ✅ Récupérer toutes les performances de tous les employés
+
     @GetMapping(path = "/get_all_performances")
     List<Performance> getAllPerformances() {
         return performanceService.getAllPerformances();
     }
 
-    // ✅ 5. Supprimer une performance
+
     @DeleteMapping(path = "/delete_performance/{id}")
     void deletePerformance(@PathVariable Long id) {
         performanceService.desaffecterPerformance(id);

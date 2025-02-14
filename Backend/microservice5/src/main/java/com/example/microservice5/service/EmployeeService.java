@@ -9,6 +9,8 @@ import com.example.microservice5.repository.SalaryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class EmployeeService {
@@ -19,6 +21,11 @@ public class EmployeeService {
 
     public Employee getEmployee(Long id) {
         return employeeRepository.findById(id).get();
+    }
+
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
+
     }
     public Employee addEmployee(Employee employee) {
         return employeeRepository.save(employee);

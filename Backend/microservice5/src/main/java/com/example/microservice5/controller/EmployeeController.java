@@ -6,6 +6,8 @@ import com.example.microservice5.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class EmployeeController {
@@ -25,6 +27,12 @@ public class EmployeeController {
      Employee getEmployee(@PathVariable Long id){
         return employeeService.getEmployee(id);
     }
+
+    @GetMapping(path ="/get_all_employees")
+    List<Employee> getAllEmployees(){
+        return employeeService.getAllEmployees();
+    }
+
     @PostMapping(path ="/add_employee")
     Employee addEmployee(@RequestBody Employee employee){
         return employeeService.addEmployee(employee);

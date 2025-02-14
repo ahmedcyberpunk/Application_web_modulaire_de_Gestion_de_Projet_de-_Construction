@@ -55,14 +55,14 @@ public class PerfermonceService {
 
  */
 
-    // 1. Affecter une performance à un employé
+
     public Performance affecterPerformance(Long employeeId, Performance performance) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new RuntimeException("Employee not found"));
         performance.setEmployee(employee);
         return performanceRepository.save(performance);
     }
-    // 2. Modifier une performance
+
     public Performance modifierPerformance(Long performanceId, Performance performance) {
         Performance existingPerformance = performanceRepository.findById(performanceId)
                 .orElseThrow(() -> new RuntimeException("Performance not found"));
@@ -71,14 +71,14 @@ public class PerfermonceService {
         existingPerformance.setCommentaire(performance.getCommentaire());
         return performanceRepository.save(existingPerformance);
     }
-    // 3. Récupérer toutes les performances d'un employé
+
     public List<Performance> getPerformancesByEmployeeId(Long employeeId) {
         return performanceRepository.findByEmployeeId(employeeId);
     }
     public List<Performance> getAllPerformances() {
         return performanceRepository.findAll();
     }
-    // 4. Supprimer une performance (désaffecter)
+
     public void desaffecterPerformance(Long performanceId) {
         performanceRepository.deleteById(performanceId);
     }
