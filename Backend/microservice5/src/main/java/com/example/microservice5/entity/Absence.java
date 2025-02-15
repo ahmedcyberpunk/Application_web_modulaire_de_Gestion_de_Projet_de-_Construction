@@ -1,5 +1,6 @@
 package com.example.microservice5.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,5 +25,6 @@ public class Absence {
      AbsenceType type;
 
     @ManyToOne
+    @JsonIgnore
     Employee employee;
 }
