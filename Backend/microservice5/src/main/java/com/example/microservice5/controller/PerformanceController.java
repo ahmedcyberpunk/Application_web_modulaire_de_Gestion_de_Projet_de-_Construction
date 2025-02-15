@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping(path = "/performance")
 public class PerformanceController {
 
     PerfermonceService performanceService;

@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/employee")
 public class EmployeeController {
     EmployeeService employeeService;
 
@@ -36,5 +37,18 @@ public class EmployeeController {
     @PostMapping(path ="/add_employee")
     Employee addEmployee(@RequestBody Employee employee){
         return employeeService.addEmployee(employee);
+    }
+    @GetMapping("/sorted-by-name")
+    public List<Employee> getEmployeesSortedByName() {
+        return employeeService.getEmployeesSortedByName();
+    }
+
+    @GetMapping("/sorted-by-salary")
+    public List<Employee> getEmployeesSortedBySalary() {
+        return employeeService.getEmployeesSortedBySalary();
+    }
+    @GetMapping("/search")
+    public List<Employee> searchEmployees(@RequestParam String name) {
+        return employeeService.searchEmployeesByName(name);
     }
 }

@@ -7,6 +7,7 @@ import com.example.microservice5.repository.EmployeeRepository;
 import com.example.microservice5.repository.PerformanceRepository;
 import com.example.microservice5.repository.SalaryRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,5 +46,19 @@ public class EmployeeService {
         }else {
        throw new RuntimeException("Employee not found");
         }
+    }
+
+    // Trier les employés par nom
+    public List<Employee> getEmployeesSortedByName() {
+        return employeeRepository.findAll(Sort.by(Sort.Direction.ASC, "nom"));
+    }
+
+    // Trier les employés par salaire
+    public List<Employee> getEmployeesSortedBySalary() {
+        return employeeRepository.findAll(Sort.by(Sort.Direction.ASC, "salaire"));
+    }
+    //search by name
+    public List<Employee> searchEmployeesByName(String name) {
+        return employeeRepository.findByNomContainingIgnoreCase(name);
     }
 }
