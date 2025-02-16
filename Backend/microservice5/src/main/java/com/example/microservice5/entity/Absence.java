@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -18,7 +19,9 @@ public class Absence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
      Long id;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
      LocalDate dateDebut;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
      LocalDate dateFin;
 
     @Enumerated(EnumType.STRING)

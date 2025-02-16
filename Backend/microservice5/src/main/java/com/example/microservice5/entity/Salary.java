@@ -1,6 +1,7 @@
 package com.example.microservice5.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,11 +18,14 @@ import java.time.LocalDate;
 public class Salary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-     Long id;
-     LocalDate mois;
-     Long salaireBrut;
-     Long salaireNet;
+    Long id;
+    LocalDate mois;
+    Long salaireBrut;
+    Long salaireNet;
+    Long prime;
+    Long deductions;
 
     @ManyToOne
+    @JsonIgnore
     Employee employee;
 }
