@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class PerfermonceService {
+public class PerfermonceService implements IPerfermonceService {
     SalaryRepository salaryRepository;
     AbsenceRepository absenceRepository;
     EmployeeRepository employeeRepository;

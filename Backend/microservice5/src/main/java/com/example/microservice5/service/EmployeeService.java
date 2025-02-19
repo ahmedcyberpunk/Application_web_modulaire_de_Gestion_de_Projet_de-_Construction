@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class EmployeeService {
+public class EmployeeService  implements IEmployeeService{
     SalaryRepository salaryRepository;
     AbsenceRepository absenceRepository;
     EmployeeRepository employeeRepository;
