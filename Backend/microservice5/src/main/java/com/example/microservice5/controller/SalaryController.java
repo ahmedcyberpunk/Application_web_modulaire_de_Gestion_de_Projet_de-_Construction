@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/salaries")
-public class SalaryController {
+public class  SalaryController {
 
      SalaryService salaryService;
 

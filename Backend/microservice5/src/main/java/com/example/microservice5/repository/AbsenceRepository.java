@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface AbsenceRepository extends JpaRepository<Absence, Long> {
     List<Absence> findByEmployeeId(Long employeeId);
-        List<Absence> findByEmployeeIdAndDateDebutBetween(Long employeeId, LocalDate start, LocalDate end);
+    List<Absence> findByEmployeeIdAndDateDebutBetween(Long employeeId, LocalDate start, LocalDate end);
 
 
 }

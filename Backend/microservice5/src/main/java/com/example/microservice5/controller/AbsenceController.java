@@ -19,14 +19,14 @@ public class AbsenceController {
     @PostMapping("/add/{employeeId}")
     public Absence addAbsence(@RequestBody Absence absence,
                               @PathVariable Long employeeId) {
-        return absenceService.addAbsence(absence, employeeId);
+        return absenceService.affecterAbsenceEmployee(absence, employeeId);
     }
 
 
     @PutMapping("/update/{id}")
     public Absence updateAbsence(@PathVariable Long id,
                                  @RequestParam AbsenceType newType) {
-        return absenceService.updateAbsence(id, newType);
+        return absenceService.updateAbsenceType(id, newType);
     }
 
 

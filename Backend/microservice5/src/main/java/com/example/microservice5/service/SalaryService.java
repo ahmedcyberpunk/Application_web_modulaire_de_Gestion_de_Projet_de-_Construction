@@ -11,9 +11,6 @@ import com.example.microservice5.repository.PerformanceRepository;
 import com.example.microservice5.repository.SalaryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -96,7 +93,8 @@ public class SalaryService {
     }
 
     private Employee findEmployeeById(Long id) {
-        return employeeRepository.findById(id).orElseThrow(() -> new RuntimeException("Employé non trouvé"));
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employé non trouvé"));
 
 }
 }

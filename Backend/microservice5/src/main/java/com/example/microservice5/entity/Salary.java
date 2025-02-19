@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -19,6 +20,7 @@ public class Salary {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate mois;
     Long salaireBrut;
     Long salaireNet;

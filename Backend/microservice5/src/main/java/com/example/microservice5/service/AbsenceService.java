@@ -21,14 +21,15 @@ public class AbsenceService {
     PerformanceRepository performanceRepository;
 
 
-    public Absence addAbsence(Absence absence, Long employeeId) {
+    public Absence affecterAbsenceEmployee(Absence absence, Long employeeId) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new RuntimeException("Employee not found"));
         absence.setEmployee(employee);
         return absenceRepository.save(absence);
     }
 
-    public Absence updateAbsence(Long id, AbsenceType newType) {
+
+    public Absence updateAbsenceType(Long id, AbsenceType newType) {
         Absence absence = absenceRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Absence non trouvée"));
 
