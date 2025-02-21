@@ -7,8 +7,6 @@ import tn.esprit.pi.entity.Papier_autorisation;
 import tn.esprit.pi.entity.Terrain;
 import tn.esprit.pi.service.IServiceMicro4;
 
-import java.util.List;
-
 
 @AllArgsConstructor
 @RestController
@@ -59,18 +57,11 @@ public void deleteTerrain(@PathVariable("id") int id) {
         serviceMicro4.deleteContrat(id);
 
     }
+    @GetMapping("/terrain)
+            
 
-    @GetMapping("/terrain")
-    List<Terrain> getAllTerrains() {
-        return serviceMicro4.getAllTerrains();
-    }
 
-    @GetMapping("/papier")
-    List<Papier_autorisation> getAllPapier() {
-        return serviceMicro4.getAllPapier();
-    }
-    @GetMapping("/contrat")
-    List<Contrat_Terrain> getAllContrats() {
+
 
 
 }

@@ -13,7 +13,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Contart_Terrain {
+public class Contrat_Terrain {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int Id_Contrat;

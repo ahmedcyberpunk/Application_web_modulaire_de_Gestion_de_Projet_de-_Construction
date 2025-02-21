@@ -30,7 +30,7 @@ public class Terrain {
 
 @OneToMany(cascade = CascadeType.ALL,mappedBy = "terrain")
 
-    List<Contart_Terrain> contartTerrains;
+    List<Contrat_Terrain> contartTerrains;
 
 
 }
