@@ -51,8 +51,8 @@ public class EmployeeController {
         return employeeService.getEmployeesSortedBySalary();
     }
     @GetMapping("/search")
-    public List<Employee> searchEmployees(@RequestParam String name) {
-        return employeeService.searchEmployeesByName(name);
+    public List<Employee> searchEmployees(@RequestParam String keyword) {
+        return employeeService.searchEmployees(keyword);
     }
 
     @PutMapping("/heuresSupp/{employeeId}/{heuresSupp}")

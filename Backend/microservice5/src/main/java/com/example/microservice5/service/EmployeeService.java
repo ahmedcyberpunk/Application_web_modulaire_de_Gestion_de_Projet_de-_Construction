@@ -57,9 +57,9 @@ public class EmployeeService  implements IEmployeeService{
     public List<Employee> getEmployeesSortedBySalary() {
         return employeeRepository.findAll(Sort.by(Sort.Direction.ASC, "salaire"));
     }
-    //search by name
-    public List<Employee> searchEmployeesByName(String name) {
-        return employeeRepository.findByNomContainingIgnoreCase(name);
+    //search
+    public List<Employee> searchEmployees(String keyword) {
+        return employeeRepository.findByNomContainingIgnoreCaseOrPrenomContainingIgnoreCase(keyword, keyword);
     }
 
     // Méthode pour ajouter des heures supplémentaires à un employé

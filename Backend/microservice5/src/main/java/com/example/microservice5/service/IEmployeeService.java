@@ -20,5 +20,6 @@ public interface IEmployeeService {
 
     List<Employee> getEmployeesSortedBySalary();
 
-    List<Employee> searchEmployeesByName(String name);
+   // List<Employee> searchEmployeesByName(String name);
+   public List<Employee> searchEmployees(String keyword);
 }
