@@ -23,7 +23,6 @@ public class Terrain {
      String statutJuridique;
     @Enumerated(EnumType.STRING)
     Typesol typeSol;
-    String imagePath;
 
     @OneToMany(cascade = CascadeType.ALL ,mappedBy = "terrain")
     List<Papier_autorisation> papierAutorisationConstructions;
