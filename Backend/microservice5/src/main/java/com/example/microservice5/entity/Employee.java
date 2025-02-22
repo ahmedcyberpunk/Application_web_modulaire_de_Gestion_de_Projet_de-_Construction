@@ -31,6 +31,9 @@ public class Employee {
     String telephone;
     String poste;
     Long salaire;
+    Long heuresSupp = 0L;
+    Long avanceSalaire = 0L;
+
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     List<Absence> absences;

@@ -61,4 +61,50 @@ public class EmployeeService  implements IEmployeeService{
     public List<Employee> searchEmployeesByName(String name) {
         return employeeRepository.findByNomContainingIgnoreCase(name);
     }
+
+    // Méthode pour ajouter des heures supplémentaires à un employé
+    public void ajouterHeuresSupp(Long employeeId, Long heuresSupp) {
+        // Récupérer l'employé par son ID
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new RuntimeException("Employé non trouvé"));
+
+        // Ajouter les heures supplémentaires
+        employee.setHeuresSupp(employee.getHeuresSupp() + heuresSupp);
+
+        // Sauvegarder l'employé avec ses nouvelles heures supplémentaires
+        employeeRepository.save(employee);
+    }
+
+    public void demanderAvanceSalaire(Long employeeId, Long montant) {
+        // Récupérer l'employé dans la base de données
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new RuntimeException("Employé non trouvé"));
+
+        // Vérifier si le montant de l'avance est valide (doit être un montant positif)
+        if (montant <= 0) {
+            throw new IllegalArgumentException("Le montant de l'avance doit être positif");
+        }
+
+        // Calculer 1/3 du salaire brut de l'employé
+        Long limiteAvance = employee.getSalaire() / 3;
+
+        // Vérifier si le montant de l'avance demandé ne dépasse pas 1/3 du salaire brut
+        if (montant > limiteAvance) {
+            throw new IllegalArgumentException("L'avance sur salaire ne peut pas dépasser 1/3 du salaire brut de l'employé");
+        }
+
+        Long avanceActuelle = employee.getAvanceSalaire();
+
+
+        if (avanceActuelle + montant > limiteAvance) {
+            throw new IllegalArgumentException("L'avance totale (actuelle + nouvelle) ne peut pas dépasser 1/3 du salaire brut de l'employé");
+        }
+
+        // Mettre à jour l'avance sur salaire de l'employé
+        employee.setAvanceSalaire(avanceActuelle + montant);
+
+        // Sauvegarder les modifications dans la base de données
+        employeeRepository.save(employee);
+    }
+
 }

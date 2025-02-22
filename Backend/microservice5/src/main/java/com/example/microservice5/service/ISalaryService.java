@@ -6,5 +6,6 @@ import java.time.LocalDate;
 
 public interface ISalaryService {
 
+    //String calculateSalaryAndGeneratePaySlip(Long employeeId, LocalDate mois);
     Salary calculateSalary(Long employeeId, LocalDate mois);
 }

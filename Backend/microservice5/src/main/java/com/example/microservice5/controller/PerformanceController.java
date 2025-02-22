@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping(path = "/performance")
+@CrossOrigin("*")
 public class PerformanceController {
 
     PerfermonceService performanceService;

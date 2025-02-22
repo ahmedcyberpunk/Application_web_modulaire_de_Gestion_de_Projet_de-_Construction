@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/absences")
+@CrossOrigin("*")
 public class AbsenceController {
     AbsenceService absenceService;
 

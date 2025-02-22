@@ -24,8 +24,12 @@ public class Salary {
     LocalDate mois;
     Long salaireBrut;
     Long salaireNet;
-    Long prime;
+    Long primePerformance;  // Prime basée sur la performance
+    Long primeHeuresSupp;   // Prime basée sur les heures supplémentaires
+    Long cotisationsSociales; // Cotisations sociales (retraite, sécurité sociale, etc.)
+    Long avanceSalaire;
     Long deductions;
+
 
     @ManyToOne
     @JsonIgnore

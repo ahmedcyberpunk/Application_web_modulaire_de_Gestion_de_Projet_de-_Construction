@@ -4,6 +4,7 @@ package com.example.microservice5.controller;
 import com.example.microservice5.entity.Employee;
 import com.example.microservice5.service.EmployeeService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/employee")
+@CrossOrigin("*")
 public class EmployeeController {
     EmployeeService employeeService;
 
@@ -19,11 +21,12 @@ public class EmployeeController {
         employeeService.deleteEmployee(id);
     }
 
-    @PutMapping(path ="/update_employee")
-    Employee updateEmployee(@RequestBody Employee employee){
-      return   employeeService.updateEmployee(employee);
+    @PutMapping("/update_employee/{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
+        employee.setId(id);
+        Employee updatedEmployee = employeeService.updateEmployee(employee);
+        return ResponseEntity.ok(updatedEmployee);
     }
-
     @GetMapping(path ="/get_employee/{id}")
      Employee getEmployee(@PathVariable Long id){
         return employeeService.getEmployee(id);
@@ -50,5 +53,15 @@ public class EmployeeController {
     @GetMapping("/search")
     public List<Employee> searchEmployees(@RequestParam String name) {
         return employeeService.searchEmployeesByName(name);
+    }
+
+    @PutMapping("/heuresSupp/{employeeId}/{heuresSupp}")
+    public void ajouterHeuresSupp(@PathVariable Long employeeId, @PathVariable Long heuresSupp){
+        employeeService.ajouterHeuresSupp(employeeId, heuresSupp);
+    }
+
+    @PutMapping("/avanceSalaire/{employeeId}/{montant}")
+    public void demanderAvanceSalaire(@PathVariable Long employeeId, @PathVariable Long montant) {
+        employeeService.demanderAvanceSalaire(employeeId, montant);
     }
 }
