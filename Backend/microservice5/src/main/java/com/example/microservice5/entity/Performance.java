@@ -18,11 +18,11 @@ import java.time.LocalDate;
 public class Performance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-     Long id;
-     int note;
-     @DateTimeFormat(pattern = "yyyy-MM-dd")
-     LocalDate dateEvaluation;
-     String commentaire;
+    Long id;
+    int note;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    LocalDate dateEvaluation;
+    String commentaire;
 
     @ManyToOne
     @JsonIgnore

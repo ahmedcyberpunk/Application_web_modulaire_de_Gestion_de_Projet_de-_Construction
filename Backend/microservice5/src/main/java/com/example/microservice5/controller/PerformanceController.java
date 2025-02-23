@@ -1,12 +1,16 @@
 package com.example.microservice5.controller;
 
+import com.example.microservice5.entity.Employee;
 import com.example.microservice5.entity.Performance;
 import com.example.microservice5.service.PerfermonceService;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -66,9 +70,25 @@ public class PerformanceController {
 
 
     @GetMapping(path = "/get_all_performances")
-    List<Performance> getAllPerformances() {
-        return performanceService.getAllPerformances();
+    public List<Map<String, Object>> getAllPerformances() {
+        List<Performance> performances = performanceService.getAllPerformances();
+
+        return performances.stream().map(performance -> {
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", performance.getId());
+            response.put("note", performance.getNote());
+            response.put("dateEvaluation", performance.getDateEvaluation());
+            response.put("commentaire", performance.getCommentaire());
+
+            // Récupérer l’ID de l’employé
+            Employee employee = performance.getEmployee();
+            response.put("employeeid", employee != null ? employee.getId() : null);
+            response.put("employeeName", employee != null ? employee.getNom() : "Inconnu");
+
+            return response;
+        }).collect(Collectors.toList());
     }
+
 
 
     @DeleteMapping(path = "/delete_performance/{id}")
