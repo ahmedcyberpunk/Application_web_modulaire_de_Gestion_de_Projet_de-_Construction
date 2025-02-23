@@ -13,5 +13,5 @@ public interface PerformanceRepository  extends JpaRepository<Performance, Long>
 
     List<Performance> findByEmployeeId(Long employeeId);
     List<Performance> findByEmployeeIdAndDateEvaluationBetween(Long employeeId, LocalDate start, LocalDate end);
-
+    Performance findByEmployeeId(int employeeId);
 }

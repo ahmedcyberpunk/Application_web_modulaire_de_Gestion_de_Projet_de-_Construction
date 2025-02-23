@@ -7,6 +7,7 @@ import com.example.microservice5.service.PerfermonceService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,22 +73,35 @@ public class PerformanceController {
     @GetMapping(path = "/get_all_performances")
     public List<Map<String, Object>> getAllPerformances() {
         List<Performance> performances = performanceService.getAllPerformances();
+        Map<Long, Map<String, Object>> groupedPerformances = new HashMap<>();
 
-        return performances.stream().map(performance -> {
-            Map<String, Object> response = new HashMap<>();
-            response.put("id", performance.getId());
-            response.put("note", performance.getNote());
-            response.put("dateEvaluation", performance.getDateEvaluation());
-            response.put("commentaire", performance.getCommentaire());
+        for (Performance perf : performances) {
+            Employee employee = perf.getEmployee();
+            if (employee == null) continue;
 
-            // Récupérer l’ID de l’employé
-            Employee employee = performance.getEmployee();
-            response.put("employeeid", employee != null ? employee.getId() : null);
-            response.put("employeeName", employee != null ? employee.getNom() : "Inconnu");
+            Long employeeId = employee.getId();
 
-            return response;
-        }).collect(Collectors.toList());
+            if (!groupedPerformances.containsKey(employeeId)) {
+                Map<String, Object> perfData = new HashMap<>();
+                perfData.put("employeeId", employeeId);
+                perfData.put("employeeName", employee.getNom());
+                perfData.put("employeePrenom", employee.getPrenom());
+                perfData.put("notes", new ArrayList<String>());
+                perfData.put("dates", new ArrayList<String>());
+                perfData.put("commentaires", new ArrayList<String>());
+
+                groupedPerformances.put(employeeId, perfData);
+            }
+
+            Map<String, Object> perfData = groupedPerformances.get(employeeId);
+            ((List<String>) perfData.get("notes")).add(String.valueOf(perf.getNote()));
+            ((List<String>) perfData.get("dates")).add(perf.getDateEvaluation().toString());
+            ((List<String>) perfData.get("commentaires")).add(perf.getCommentaire());
+        }
+
+        return new ArrayList<>(groupedPerformances.values());
     }
+
 
 
 
