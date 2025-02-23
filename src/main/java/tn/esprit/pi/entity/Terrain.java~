@@ -27,7 +27,7 @@ public class Terrain {
     String imagePath;
 
     @OneToMany(cascade = CascadeType.ALL ,mappedBy = "terrain")
-
+    @JsonIgnore
     List<Papier_autorisation> papierAutorisationConstructions;
 
 @OneToMany(cascade = CascadeType.ALL,mappedBy = "terrain")
