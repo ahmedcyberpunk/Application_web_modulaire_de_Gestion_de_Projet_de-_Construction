@@ -30,10 +30,16 @@ public Terrain addTerrain(@RequestBody Terrain terrain) {
     return serviceMicro4.addTerrain(terrain);
     };
 
-@PutMapping("/updateterrain")
-public void updateTerrain(@RequestBody Terrain terrain) {
-   serviceMicro4.updateTerrain(terrain);
-    };
+    @PutMapping("/updateterrain")
+    public Terrain updateTerrain( @RequestBody Terrain terrain) {
+        // Fetch the existing terrain by ID
+        return serviceMicro4.updateTerrain(terrain);
+    }
+    @GetMapping("/seuleterrain/{id}")
+    public Terrain getTerrain(@PathVariable("id") Long id) {
+        return serviceMicro4.findByIdTerrain(id);
+    }
+
 
 @DeleteMapping("/deleteterrain/{id}")
 public void deleteTerrain(@PathVariable("id") int id) {
@@ -42,9 +48,9 @@ public void deleteTerrain(@PathVariable("id") int id) {
 
 
 
-    @PostMapping("/addPapier")
-    public Papier_autorisation addPapier(@RequestBody Papier_autorisation papier_autorisation) {
-        return serviceMicro4.addPapier(papier_autorisation);
+    @PostMapping("/addPapier/{id}")
+    public Papier_autorisation addPapier(@RequestBody Papier_autorisation papier_autorisation,@PathVariable("id") Long id) {
+        return serviceMicro4.addPapier(papier_autorisation,id);
     }
     @PutMapping("/updatePapier")
     public void updatePapier(@RequestBody Papier_autorisation papier_autorisation) {
@@ -76,8 +82,12 @@ public void deleteTerrain(@PathVariable("id") int id) {
     List<Terrain> getAllTerrains() {
         return serviceMicro4.getAllTerrains();
     }
+    @GetMapping("/papiers/{terrainId}")
+    public List<Papier_autorisation> getPapierByTerrainId(@PathVariable("terrainId") Long terrainId) {
+        return  serviceMicro4.getPapierByTerrainId(terrainId);
+    }
 
-    @GetMapping("/papier")
+    @GetMapping("/allpapier")
     List<Papier_autorisation> getAllPapier() {
         return serviceMicro4.getAllPapier();
     }

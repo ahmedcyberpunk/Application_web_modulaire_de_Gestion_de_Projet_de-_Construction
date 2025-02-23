@@ -2,6 +2,8 @@ package tn.esprit.pi.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tn.esprit.pi.entity.Contrat_Terrain;
 import tn.esprit.pi.entity.Papier_autorisation;
@@ -11,6 +13,7 @@ import tn.esprit.pi.repository.ContratRepo;
 import tn.esprit.pi.repository.TerrainRepo;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -24,13 +27,51 @@ public class ServiceMicro4 implements IServiceMicro4 {
  public Terrain addTerrain(Terrain terrain){
   return terrainRepo.save(terrain);
  }
- public void updateTerrain(Terrain terrain) {
-  if (terrainRepo.findById(terrain.getIdTerrain()).isPresent()) {
-   terrainRepo.save(terrain);
-  } else {
-   throw new RuntimeException("Terrain not found");
+ public Terrain  updateTerrain(Terrain terrain) {
+  Optional<Terrain> existingTerrainOpt = terrainRepo.findById(terrain.getIdTerrain());
+
+  if (existingTerrainOpt.isPresent()) {
+   Terrain existingTerrain = existingTerrainOpt.get();
+
+   // Update the existing terrain's fields
+   existingTerrain.setNom(terrain.getNom());
+   existingTerrain.setLocalisation(terrain.getLocalisation());
+   existingTerrain.setSuperficie(terrain.getSuperficie());
+   existingTerrain.setStatutJuridique(terrain.getStatutJuridique());
+   existingTerrain.setTypeSol(terrain.getTypeSol());
+
+
+   return terrainRepo.save(existingTerrain);
+
+
   }
+
+  return null;
+
+
  }
+ public List<Papier_autorisation> getPapierByTerrainId(Long terrainId) {
+  // Find terrain by ID
+  Terrain terrain = terrainRepo.findByIdTerrain(terrainId);
+
+
+  // Return list of papers associated with the found terrain
+  return terrain.getPapierAutorisationConstructions();
+ }
+
+ @Override
+ public Terrain findByIdTerrain(Long id) {
+  return terrainRepo.findByIdTerrain(id);
+ }
+
+ @Override
+ public Papier_autorisation addPapier(Papier_autorisation papier, Long id) {
+  Terrain terrain = terrainRepo.findByIdTerrain(id);
+  papier.setTerrain(terrain);
+
+  return autorisationRepo.save(papier);
+ }
+
 
  public void deleteTerrain(Integer id){
   terrainRepo.deleteById(id);
@@ -41,10 +82,7 @@ public class ServiceMicro4 implements IServiceMicro4 {
   return terrainRepo.findAll();
  }
 
- @Override
- public Papier_autorisation addPapier(Papier_autorisation papier) {
-  return autorisationRepo.save(papier);
- }
+
 
  @Override
  public void updatePapier(Papier_autorisation papier) {

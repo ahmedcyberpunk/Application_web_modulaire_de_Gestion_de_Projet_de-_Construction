@@ -12,15 +12,17 @@ public interface IServiceMicro4 {
 
     ///////////////////CRUD TERRAIN////////////////////////
     public Terrain addTerrain(Terrain terrain);
-    public void updateTerrain(Terrain terrain);
+    public Terrain updateTerrain(Terrain terrain);
     public void deleteTerrain(Integer id);
     List<Terrain> getAllTerrains();
+    public List<Papier_autorisation> getPapierByTerrainId(Long terrainId);
 
+    Terrain findByIdTerrain(Long id);
 
 
     ///////////////////CRUD AUTORISATION////////////////////////
 
-    public Papier_autorisation addPapier(Papier_autorisation papier);
+    public Papier_autorisation addPapier(Papier_autorisation papier, Long id);
     public void updatePapier(Papier_autorisation papier);
     public void deletePapier(Integer id);
     List<Papier_autorisation> getAllPapier();

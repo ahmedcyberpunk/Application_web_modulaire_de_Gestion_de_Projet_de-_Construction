@@ -1,6 +1,7 @@
 package tn.esprit.pi.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,10 +20,13 @@ public class Papier_autorisation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int Id_Autorisation;
-    String Type_Autorisation;
-    String Statut;
-    Date Date_Obtention;
-@ManyToOne
+    String type_Autorisation;
+    String statut;
+    String  description;
+
+
+    @ManyToOne
+    @JsonIgnore
    Terrain terrain;
 
 

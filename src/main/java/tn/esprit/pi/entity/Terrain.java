@@ -1,5 +1,6 @@
 package tn.esprit.pi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,10 +27,11 @@ public class Terrain {
     String imagePath;
 
     @OneToMany(cascade = CascadeType.ALL ,mappedBy = "terrain")
+    @JsonIgnore
     List<Papier_autorisation> papierAutorisationConstructions;
 
-
 @OneToMany(cascade = CascadeType.ALL,mappedBy = "terrain")
+@JsonIgnore
 
     List<Contrat_Terrain> contartTerrains;
 

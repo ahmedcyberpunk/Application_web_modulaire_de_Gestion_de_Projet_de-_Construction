@@ -1,10 +1,13 @@
 package tn.esprit.pi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 
@@ -22,6 +25,10 @@ public class Contrat_Terrain {
     String type_contart;
     boolean statut_Contrat;
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "idTerrain", nullable = false)
+    @JsonIgnore
+
     Terrain terrain;
 
 
