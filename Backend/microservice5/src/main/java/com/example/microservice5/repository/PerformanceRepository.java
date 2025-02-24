@@ -14,4 +14,7 @@ public interface PerformanceRepository  extends JpaRepository<Performance, Long>
     List<Performance> findByEmployeeId(Long employeeId);
     List<Performance> findByEmployeeIdAndDateEvaluationBetween(Long employeeId, LocalDate start, LocalDate end);
     Performance findByEmployeeId(int employeeId);
+    @Query("SELECT p.id AS id, p.note AS note, p.dateEvaluation AS dateEvaluation, p.commentaire AS commentaire, e.nom AS employeeNom, e.prenom AS employeePrenom FROM Performance p JOIN p.employee e")
+    List<Object[]> findPerformancesWithEmployeeName();
+
 }

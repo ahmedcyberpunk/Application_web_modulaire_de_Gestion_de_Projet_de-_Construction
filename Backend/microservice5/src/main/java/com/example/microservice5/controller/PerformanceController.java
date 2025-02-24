@@ -2,6 +2,7 @@ package com.example.microservice5.controller;
 
 import com.example.microservice5.entity.Employee;
 import com.example.microservice5.entity.Performance;
+import com.example.microservice5.repository.PerformanceRepository;
 import com.example.microservice5.service.PerfermonceService;
 
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 public class PerformanceController {
 
     PerfermonceService performanceService;
+    PerformanceRepository performanceRepository;
 /*
     // Ajouter une nouvelle performance
     @PostMapping
@@ -69,8 +71,27 @@ public class PerformanceController {
         return performanceService.getPerformancesByEmployeeId(employeeId);
     }
 
+    @GetMapping(path = "/get_all")
+    public List<Map<String, Object>> getAll() {
+        List<Object[]> results = performanceRepository.findPerformancesWithEmployeeName();
+        List<Map<String, Object>> performancesWithEmployeeName = new ArrayList<>();
 
-    @GetMapping(path = "/get_all_performances")
+        for (Object[] result : results) {
+            Map<String, Object> performanceMap = new HashMap<>();
+            performanceMap.put("id", result[0]);
+            performanceMap.put("note", result[1]);
+            performanceMap.put("dateEvaluation", result[2]);
+            performanceMap.put("commentaire", result[3]);
+            performanceMap.put("employeeName", result[4]);
+            performanceMap.put("employeePrenom", result[5]);
+
+            performancesWithEmployeeName.add(performanceMap);
+        }
+
+        return performancesWithEmployeeName;
+    }
+
+    @GetMapping(path = "/get_all_performancesbyEmpl")
     public List<Map<String, Object>> getAllPerformances() {
         List<Performance> performances = performanceService.getAllPerformances();
         Map<Long, Map<String, Object>> groupedPerformances = new HashMap<>();

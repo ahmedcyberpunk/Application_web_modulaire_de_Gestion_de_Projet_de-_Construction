@@ -78,6 +78,9 @@ public class PerfermonceService implements IPerfermonceService {
     public List<Performance> getAllPerformances() {
         return performanceRepository.findAll();
     }
+    public List<Performance> getAll() {
+        return performanceRepository.findAll();
+    }
 
     public void desaffecterPerformance(Long performanceId) {
         performanceRepository.deleteById(performanceId);
