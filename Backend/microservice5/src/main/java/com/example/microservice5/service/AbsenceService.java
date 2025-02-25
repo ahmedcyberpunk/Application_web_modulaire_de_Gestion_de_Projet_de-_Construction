@@ -10,7 +10,11 @@ import com.example.microservice5.repository.SalaryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -29,18 +33,25 @@ public class AbsenceService  implements IAbsenceService{
     }
 
 
-    public Absence updateAbsenceType(Long id, AbsenceType newType) {
+    public Absence updateAbsence(Long id, AbsenceType newType, LocalDate newDateDebut, LocalDate newDateFin) {
         Absence absence = absenceRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Absence non trouvée"));
 
+        // Mise à jour des valeurs
         absence.setType(newType);
+        absence.setDateDebut(newDateDebut);
+        absence.setDateFin(newDateFin);
+
         return absenceRepository.save(absence);
     }
+
 
     //  Récupérer toutes les absences
     public List<Absence> getAllAbsences() {
         return absenceRepository.findAll();
     }
+
+
 
     // Récupérer les absences d'un employee
     public List<Absence> getAbsencesByEmployee(Long employeeId) {
@@ -54,4 +65,24 @@ public class AbsenceService  implements IAbsenceService{
         } else {
             throw new RuntimeException("Absence non trouvée");
         }}
+
+    public List<Map<String, Object>> getAllAbsencesWithEmployeeInfo() {
+        List<Object[]> results = absenceRepository.findAllAbsencesWithEmployeeInfo();
+        List<Map<String, Object>> absences = new ArrayList<>();
+
+        for (Object[] row : results) {
+            Map<String, Object> absenceMap = new HashMap<>();
+            absenceMap.put("id", row[0]);
+            absenceMap.put("dateDebut", row[1]);
+            absenceMap.put("dateFin", row[2]);
+            absenceMap.put("type", row[3]);
+            absenceMap.put("employeeId", row[4]);
+            absenceMap.put("nom", row[5]);
+            absenceMap.put("prenom", row[6]);
+            absences.add(absenceMap);
+        }
+        return absences;
+    }
+
+
 }

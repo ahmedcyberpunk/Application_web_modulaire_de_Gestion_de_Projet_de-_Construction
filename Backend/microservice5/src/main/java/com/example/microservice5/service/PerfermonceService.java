@@ -66,11 +66,16 @@ public class PerfermonceService implements IPerfermonceService {
     public Performance modifierPerformance(Long performanceId, Performance performance) {
         Performance existingPerformance = performanceRepository.findById(performanceId)
                 .orElseThrow(() -> new RuntimeException("Performance not found"));
+
+        // Mise à jour des propriétés
         existingPerformance.setNote(performance.getNote());
         existingPerformance.setDateEvaluation(performance.getDateEvaluation());
         existingPerformance.setCommentaire(performance.getCommentaire());
+
+        // Sauvegarde et retour de la performance mise à jour
         return performanceRepository.save(existingPerformance);
     }
+
 
     public List<Performance> getPerformancesByEmployeeId(Long employeeId) {
         return performanceRepository.findByEmployeeId(employeeId);

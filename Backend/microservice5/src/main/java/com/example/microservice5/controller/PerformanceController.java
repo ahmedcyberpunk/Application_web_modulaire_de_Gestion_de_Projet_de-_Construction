@@ -61,10 +61,11 @@ public class PerformanceController {
     }
 
 
-    @PutMapping(path = "/update_performance")
-    Performance updatePerformance(@RequestBody Performance performance) {
-        return performanceService.modifierPerformance(performance.getId(), performance);
+    @PutMapping(path = "/update_performance/{id}")
+    Performance updatePerformance(@RequestBody Performance performance, @PathVariable Long id) {
+        return performanceService.modifierPerformance(id, performance);
     }
+
 
     @GetMapping(path = "/get_performances_by_employee/{employeeId}")
     List<Performance> getPerformancesByEmployee(@PathVariable Long employeeId) {

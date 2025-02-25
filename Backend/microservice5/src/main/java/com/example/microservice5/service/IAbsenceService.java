@@ -8,7 +8,7 @@ import java.util.List;
 public interface IAbsenceService {
     Absence affecterAbsenceEmployee(Absence absence, Long employeeId);
 
-    Absence updateAbsenceType(Long id, AbsenceType newType);
+
 
     List<Absence> getAllAbsences();
 
