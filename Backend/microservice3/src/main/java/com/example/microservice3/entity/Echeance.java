@@ -3,6 +3,9 @@ package com.example.microservice3.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 @Entity
 @Getter
 @Setter
@@ -15,18 +18,20 @@ public class Echeance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEcheance;
 
-    private Double montantEcheance;
-    private String dateEcheance;
-    private Double montantInteret;
-    private Double montantTotalAPayer;
-    private String statut; // 'En attente', 'Payée', 'Retard'
-    private Double tauxInteret; // Taux d'intérêt en %
+    @Temporal(TemporalType.DATE)
+    private Date dateLimite;
 
+    private BigDecimal montantDu;
+
+    @Enumerated(EnumType.STRING)
+    private StatutEcheance statut;
+
+    // Plusieurs échéances sont liées à une seule facture
     @ManyToOne
     @JoinColumn(name = "facture_id")
-    Facture facture;
+    private Facture facture;
 
-    @ManyToOne
-    @JoinColumn(name = "mode_paiement_id")
-    ModePaiement modePaiement;
+    // Une échéance peut être payée par un seul paiement
+    @OneToOne(mappedBy = "echeance", cascade = CascadeType.ALL)
+    private Paiement paiement;
 }

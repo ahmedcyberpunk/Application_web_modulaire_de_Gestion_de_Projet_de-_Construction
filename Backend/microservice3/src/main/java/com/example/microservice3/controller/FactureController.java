@@ -5,12 +5,16 @@ import com.example.microservice3.service.IFactureService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/facture")
+@CrossOrigin(origins = "http://localhost:4200")
 @AllArgsConstructor
 public class FactureController {
 
  IFactureService factureService;
+    @CrossOrigin(origins = "http://localhost:4200")
 
     @PostMapping("/addfacture")
     public Facture addFacture(@RequestBody Facture facture) {
@@ -22,11 +26,17 @@ public class FactureController {
         return factureService.getFacture(id);
     }
 
-    @PutMapping("/updatefacture")
-    public Facture updateFacture(@RequestBody Facture facture) {
-        factureService.updateFacture(facture);
-        return facture;
+    @PutMapping("/updatefacture/{id}")
+    public Facture updateFacture(@PathVariable Long id, @RequestBody Facture facture) {
+        return factureService.updateFacture(id, facture);
     }
+
+
+    @GetMapping( "/facturesall")
+    public List<Facture> getAllFactures() {
+        return factureService.getAllFactures();
+    }
+
 
     @DeleteMapping("/deletefacture/{id}")
     public void deleteFacture(@PathVariable Long id) {

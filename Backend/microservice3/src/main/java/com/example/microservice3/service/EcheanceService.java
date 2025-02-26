@@ -3,10 +3,12 @@ package com.example.microservice3.service;
 import com.example.microservice3.entity.Echeance;
 import com.example.microservice3.repository.EcheanceRepository;
 import com.example.microservice3.repository.FactureRepository;
-import com.example.microservice3.repository.ModePaiementRepository;
+import com.example.microservice3.repository.PaiementRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -15,10 +17,11 @@ public class EcheanceService implements IEcheanceService {
 
     private final FactureRepository factureRepository;
     private final EcheanceRepository echeanceRepository;
-    private final ModePaiementRepository modePaiementRepository;
+    private final PaiementRepository modePaiementRepository;
 
     @Override
     public Echeance addEcheance(Echeance echeance) {
+
         return echeanceRepository.save(echeance);
     }
 
@@ -37,20 +40,21 @@ public class EcheanceService implements IEcheanceService {
                 .orElseThrow(() -> new RuntimeException("Echeance not found with id: " + id));
     }
 
+
+
     @Override
-    public Echeance updateEcheance(Long id, Echeance updatedEcheance) {
-        return echeanceRepository.findById(id)
-                .map(existingEcheance -> {
-                    existingEcheance.setMontantEcheance(updatedEcheance.getMontantEcheance());
-                    existingEcheance.setDateEcheance(updatedEcheance.getDateEcheance());
-                    existingEcheance.setMontantInteret(updatedEcheance.getMontantInteret());
-                    existingEcheance.setMontantTotalAPayer(updatedEcheance.getMontantTotalAPayer());
-                    existingEcheance.setStatut(updatedEcheance.getStatut());
-                    existingEcheance.setTauxInteret(updatedEcheance.getTauxInteret());
-                    existingEcheance.setFacture(updatedEcheance.getFacture());
-                    existingEcheance.setModePaiement(updatedEcheance.getModePaiement());
-                    return echeanceRepository.save(existingEcheance);
-                })
-                .orElseThrow(() -> new RuntimeException("Echeance not found with id: " + id));
+    public List<Echeance> getallEcheance() {
+        return echeanceRepository.findAll();
     }
+    @Override
+    public Echeance updateEcheance(Long id, Echeance echeance) {
+        return echeanceRepository.findById(id).map(existingEcheance -> {
+            existingEcheance.setDateLimite(echeance.getDateLimite());
+            existingEcheance.setMontantDu(echeance.getMontantDu());
+            existingEcheance.setStatut(echeance.getStatut());
+            return echeanceRepository.save(existingEcheance);
+        }).orElseThrow(() -> new RuntimeException("Echeance not found with id: " + id));
+    }
+
+
 }

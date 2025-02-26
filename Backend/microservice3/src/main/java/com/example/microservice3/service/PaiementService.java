@@ -1,7 +1,7 @@
 package com.example.microservice3.service;
 
 import com.example.microservice3.entity.Paiement;
-import com.example.microservice3.repository.ModePaiementRepository;
+import com.example.microservice3.repository.PaiementRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +9,9 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class ModePaiementService implements IModePaimentService {
+public class PaiementService implements IPaimentService {
 
-    private final ModePaiementRepository modePaiementRepository;
+    private final PaiementRepository modePaiementRepository;
 
     @Override
     public List<Paiement> getAllModesPaiement() {
@@ -29,15 +29,7 @@ public class ModePaiementService implements IModePaimentService {
         return modePaiementRepository.save(modePaiement);  // Ajouter un nouveau mode de paiement
     }
 
-    @Override
-    public Paiement updateModePaiement(Integer id, Paiement modePaiement) {
-        if (modePaiementRepository.existsById(id)) {
-            modePaiement.setIdModePaiement(id);  // Mettre à jour l'ID
-            return modePaiementRepository.save(modePaiement);
-        } else {
-            throw new RuntimeException("ModePaiement not found");
-        }
-    }
+
 
     @Override
     public void deleteModePaiement(Integer id) {
