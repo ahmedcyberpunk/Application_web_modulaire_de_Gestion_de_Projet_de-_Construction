@@ -89,10 +89,7 @@ public void deleteTerrain(@PathVariable("id") int id) {
         return  serviceMicro4.getPapierByTerrainId(terrainId);
     }
 
-    @GetMapping("/allpapier")
-    List<Papier_autorisation> getAllPapier() {
-        return serviceMicro4.getAllPapier();
-    }
+
     @GetMapping("/contrat")
     List<Contrat_Terrain> getAllContrats() {
         return serviceMicro4.getAllContrats();
