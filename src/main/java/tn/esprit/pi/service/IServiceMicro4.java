@@ -19,16 +19,16 @@ public interface IServiceMicro4 {
 
     Terrain findByIdTerrain(Long id);
 
-
+Contrat_Terrain findContratByTerrainId(Long id);
     ///////////////////CRUD AUTORISATION////////////////////////
 
     public Papier_autorisation addPapier(Papier_autorisation papier, Long id);
-    public void updatePapier(Papier_autorisation papier);
+    public void updatePapier(Papier_autorisation papier,Long id);
     public void deletePapier(Integer id);
     List<Papier_autorisation> getAllPapier();
 ///////////////////CRUD CONTRAT////////////////////////
 
-    public Contrat_Terrain addContrat(Contrat_Terrain contrat);
+    public Contrat_Terrain addContrat(Contrat_Terrain contrat,Long id);
     public void updateContrat(Contrat_Terrain contart);
     public void deleteContrat(Integer id);
     List<Contrat_Terrain> getAllContrats();

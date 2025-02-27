@@ -52,9 +52,11 @@ public void deleteTerrain(@PathVariable("id") int id) {
     public Papier_autorisation addPapier(@RequestBody Papier_autorisation papier_autorisation,@PathVariable("id") Long id) {
         return serviceMicro4.addPapier(papier_autorisation,id);
     }
-    @PutMapping("/updatePapier")
-    public void updatePapier(@RequestBody Papier_autorisation papier_autorisation) {
-        serviceMicro4.updatePapier(papier_autorisation);
+
+
+    @PutMapping("/updatePapier/{id}")
+    public void updatePapier(@RequestBody Papier_autorisation papier_autorisation,@PathVariable("id") Long id) {
+        serviceMicro4.updatePapier(papier_autorisation,id);
     }
     @DeleteMapping ("/deletePapier/{id}")
     public void deletePapier(@PathVariable("id") int id) {
@@ -63,9 +65,9 @@ public void deleteTerrain(@PathVariable("id") int id) {
 
 
 
-    @PostMapping("/addContrat")
-    public Contrat_Terrain addContrat(@RequestBody Contrat_Terrain contart_terrain) {
-        return serviceMicro4.addContrat(contart_terrain);
+    @PostMapping("/addContrat/{id}")
+    public Contrat_Terrain addContrat(@RequestBody Contrat_Terrain contart_terrain,@PathVariable("id") Long id) {
+        return serviceMicro4.addContrat(contart_terrain,id);
     }
     @PutMapping("/updateContrat")
     public void updateContrat(@RequestBody Contrat_Terrain contart_terrain) {
@@ -104,6 +106,10 @@ public void deleteTerrain(@PathVariable("id") int id) {
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading image");
         }
+    }
+@GetMapping("/contrat/{id}")
+    Contrat_Terrain findContratByTerrainId(@PathVariable("id") Long id) {
+       return serviceMicro4.findContratByTerrainId(id);
     }
 
 }

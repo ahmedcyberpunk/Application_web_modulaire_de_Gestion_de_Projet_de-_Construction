@@ -65,6 +65,11 @@ public class ServiceMicro4 implements IServiceMicro4 {
  }
 
  @Override
+ public Contrat_Terrain findContratByTerrainId(Long id) {
+  return contratRepo.findByTerrainIdTerrain(id);
+ }
+
+ @Override
  public Papier_autorisation addPapier(Papier_autorisation papier, Long id) {
   Terrain terrain = terrainRepo.findByIdTerrain(id);
   papier.setTerrain(terrain);
@@ -85,8 +90,11 @@ public class ServiceMicro4 implements IServiceMicro4 {
 
 
  @Override
- public void updatePapier(Papier_autorisation papier) {
+ public void updatePapier(Papier_autorisation papier,Long id) {
   if (autorisationRepo.findById(papier.getId_Autorisation()).isPresent()) {
+
+   Terrain terrain = terrainRepo.findByIdTerrain(id);
+   papier.setTerrain(terrain);
    autorisationRepo.save(papier);
   } else {
    throw new RuntimeException("Terrain not found");
@@ -104,7 +112,10 @@ public class ServiceMicro4 implements IServiceMicro4 {
  }
 
  @Override
- public Contrat_Terrain addContrat(Contrat_Terrain contrat) {
+ public Contrat_Terrain addContrat(Contrat_Terrain contrat, Long id) {
+  Terrain terrain = terrainRepo.findByIdTerrain(id);
+  contrat.setTerrain(terrain);
+
   return  contratRepo.save(contrat);
  }
 

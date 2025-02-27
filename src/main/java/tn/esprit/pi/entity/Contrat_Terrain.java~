@@ -26,7 +26,7 @@ String prenom_Proprietaire;
     Date date_signature;
     String type_contrat;
     String statut_Contrat;
-
+ 
     int telephone;
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
