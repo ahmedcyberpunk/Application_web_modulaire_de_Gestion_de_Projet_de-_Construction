@@ -19,7 +19,7 @@ public class WebConfig {
 
 
                 registry.addMapping("/**") // Apply to all endpoints
-                        .allowedOrigins("http://localhost:4200") // Allow Angular frontend
+                        .allowedOrigins("http://localhost:4200", "http://localhost:62198")
                         .allowedMethods(
                                 HttpMethod.GET.name(),
                                 HttpMethod.POST.name(),

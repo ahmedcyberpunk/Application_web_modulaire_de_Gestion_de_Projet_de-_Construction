@@ -23,7 +23,6 @@ public class Papier_autorisation {
     String type_Autorisation;
     String statut;
     String  description;
-    String imagePath;
 
 
     @ManyToOne

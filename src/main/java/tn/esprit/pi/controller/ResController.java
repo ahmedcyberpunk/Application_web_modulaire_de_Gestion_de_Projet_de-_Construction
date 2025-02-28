@@ -21,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api4/terrain")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:62198"})
 public class ResController {
 IServiceMicro4 serviceMicro4;
 
