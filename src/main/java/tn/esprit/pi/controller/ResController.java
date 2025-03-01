@@ -1,6 +1,7 @@
 package tn.esprit.pi.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.pi.entity.Contrat_Terrain;
 import tn.esprit.pi.entity.Papier_autorisation;
 import tn.esprit.pi.entity.Terrain;
+import tn.esprit.pi.service.EmailService;
 import tn.esprit.pi.service.IServiceMicro4;
 
 import java.io.IOException;
@@ -16,6 +18,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Map;
 
 
 @AllArgsConstructor
@@ -24,6 +27,8 @@ import java.util.List;
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:62198"})
 public class ResController {
 IServiceMicro4 serviceMicro4;
+    @Autowired
+    private EmailService emailService;
 
 @PostMapping("/addterrain")
 public Terrain addTerrain(@RequestBody Terrain terrain) {
@@ -46,7 +51,15 @@ public void deleteTerrain(@PathVariable("id") int id) {
       serviceMicro4.deleteTerrain(id);
 }
 
+    @PostMapping("/send")
+    public String sendEmail(@RequestBody Map<String, String> request) {
+        String to = request.get("to");
+        String subject = request.get("subject");
+        String body = request.get("body");
 
+        emailService.sendEmail(to, subject, body);
+        return "Email envoyé avec succès !";
+    }
 
     @PostMapping("/addPapier/{id}")
     public Papier_autorisation addPapier(@RequestBody Papier_autorisation papier_autorisation,@PathVariable("id") Long id) {
