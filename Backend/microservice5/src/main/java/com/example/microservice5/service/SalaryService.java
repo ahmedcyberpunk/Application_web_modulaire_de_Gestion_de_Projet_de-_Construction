@@ -133,6 +133,8 @@ public class SalaryService implements ISalaryService {
                 .orElseThrow(() -> new RuntimeException("Employé non trouvé"));
     }
 
-
+    public List<Salary> getHistoriqueSalaire(Long employeeId) {
+        return salaryRepository.findByEmployeeIdOrderByMoisDesc(employeeId);
+    }
 
 }

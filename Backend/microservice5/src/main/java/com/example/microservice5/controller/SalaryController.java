@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -24,6 +25,9 @@ public class  SalaryController {
         return salaryService.calculateSalary(employeeId, mois);
     }
 
-
+    @GetMapping("/historique/{employeeId}")
+    public List<Salary> getHistoriqueSalaire(@PathVariable Long employeeId) {
+        return salaryService.getHistoriqueSalaire(employeeId);
+    }
 }
 
