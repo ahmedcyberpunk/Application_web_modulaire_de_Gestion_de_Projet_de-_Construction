@@ -9,9 +9,9 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         // Allow CORS for specific endpoints or all endpoints
-        registry.addMapping("/**") // You can specify a more specific URL pattern if needed
-                .allowedOrigins("*") // Replace with your Angular app URL
-                .allowedMethods("GET", "POST", "PUT", "DELETE") // Allow the HTTP methods you need
-                .allowedHeaders("*"); // Allow all headers
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedHeaders("*");
     }
 }

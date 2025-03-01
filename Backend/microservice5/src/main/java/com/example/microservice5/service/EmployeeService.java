@@ -6,8 +6,10 @@ import com.example.microservice5.repository.AbsenceRepository;
 import com.example.microservice5.repository.EmployeeRepository;
 import com.example.microservice5.repository.PerformanceRepository;
 import com.example.microservice5.repository.SalaryRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +21,13 @@ public class EmployeeService  implements IEmployeeService{
     AbsenceRepository absenceRepository;
     EmployeeRepository employeeRepository;
     PerformanceRepository performanceRepository;
+
+    @Scheduled(cron = "0 0 0 1 * ?")  //
+    @Transactional
+    public void resetHeuresSuppEtAvance() {
+        employeeRepository.resetHeuresSuppEtAvance();
+        System.out.println("✅ Heures supplémentaires et avances réinitialisées pour tous les employés.");
+    }
 
     public Employee getEmployee(Long id) {
         return employeeRepository.findById(id).get();

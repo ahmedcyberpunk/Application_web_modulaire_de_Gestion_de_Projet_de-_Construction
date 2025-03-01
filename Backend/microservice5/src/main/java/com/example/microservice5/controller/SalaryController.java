@@ -24,11 +24,6 @@ public class  SalaryController {
         return salaryService.calculateSalary(employeeId, mois);
     }
 
-    @PostMapping("/generate-pay-slip/{employeeId}")
-    public String generatePaySlip(@PathVariable Long employeeId,
-                                  @RequestParam("mois")
-                                  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate mois) {
-        return salaryService.generatePayslipWithDetails(employeeId, mois);
-    }
+
 }
 
