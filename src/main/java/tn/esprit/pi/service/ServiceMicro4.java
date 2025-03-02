@@ -1,9 +1,12 @@
 package tn.esprit.pi.service;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import tn.esprit.pi.entity.Contrat_Terrain;
 import tn.esprit.pi.entity.Papier_autorisation;
@@ -11,7 +14,15 @@ import tn.esprit.pi.entity.Terrain;
 import tn.esprit.pi.repository.AutorisationRepo;
 import tn.esprit.pi.repository.ContratRepo;
 import tn.esprit.pi.repository.TerrainRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.MailException;
 
+import java.io.File;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +33,7 @@ public class ServiceMicro4 implements IServiceMicro4 {
  TerrainRepo terrainRepo;
  AutorisationRepo autorisationRepo;
  ContratRepo contratRepo;
+ private JavaMailSender emailSender;
 
 
  public Terrain addTerrain(Terrain terrain){
@@ -50,6 +62,9 @@ public class ServiceMicro4 implements IServiceMicro4 {
 
 
  }
+
+
+
  public List<Papier_autorisation> getPapierByTerrainId(Long terrainId) {
   // Find terrain by ID
   Terrain terrain = terrainRepo.findByIdTerrain(terrainId);
@@ -137,6 +152,22 @@ contratRepo.deleteById(id);
  @Override
  public List<Contrat_Terrain> getAllContrats() {
   return contratRepo.findAll();
+ }
+ @Override
+
+ public void sendEmailWithHtmlContent(String to, String subject, String body) {
+  try {
+   MimeMessage message = emailSender.createMimeMessage();
+   MimeMessageHelper helper = new MimeMessageHelper(message, true);  // true pour indiquer que c'est du contenu HTML
+   helper.setTo(to);
+   helper.setSubject(subject);
+   helper.setText(body, true);  // Corps de l'email avec HTML activé
+
+   emailSender.send(message);  // Envoi de l'e-mail
+  } catch (MessagingException e) {
+   e.printStackTrace();
+   throw new RuntimeException("Erreur lors de l'envoi de l'e-mail avec image", e);
+  }
  }
 
 

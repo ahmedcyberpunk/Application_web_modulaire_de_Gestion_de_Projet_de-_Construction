@@ -1,20 +1,8 @@
 package tn.esprit.pi.controller;
 
-import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.io.source.ByteArrayOutputStream;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.element.Paragraph;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.pi.entity.Contrat_Terrain;
@@ -38,7 +26,6 @@ import java.util.Map;
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:49548"})
 public class ResController {
     IServiceMicro4 serviceMicro4;
-    private JavaMailSender emailSender;
 
 
     @PostMapping("/addterrain")
@@ -138,32 +125,29 @@ public class ResController {
 
 
     @PostMapping("/send")
-    public ResponseEntity<String> sendEmailWithPdf(@RequestParam String to, @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<Object> sendEmail(@RequestParam String to, @RequestParam String imageUrl) {
         try {
-            // Check if the file is empty
-            if (file.isEmpty()) {
-                return ResponseEntity.badRequest().body("Aucun fichier sélectionné.");
-            }
+            // Construct the HTML email body with the image URL
+            String body = "<p>Bonjour, voici l'image :</p>" +
+                    "<img src=\"" + imageUrl + "\" alt=\"Image\" />";
 
-            // Create the email message
-            MimeMessage message = emailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);  // true for multipart
+            // Send the email with the image URL
+            serviceMicro4.sendEmailWithHtmlContent(to, "Subject: Bonjour", body);
 
-            // Set the email properties
-            helper.setTo(to);
-            helper.setSubject("Email avec PDF (image)");
-
-
-            // Add the PDF as an attachment
-
-            // Send the email
-            emailSender.send(message);
-
-            return ResponseEntity.ok().body("E-mail envoyé avec succès avec le PDF.");
-        } catch (MessagingException e) {
-            return ResponseEntity.status(500).body("Erreur lors de l'envoi de l'e-mail avec PDF: " + e.getMessage());
+            return ResponseEntity.ok().body("{\"message\": \"E-mail envoyé avec succès à " + to + "\"}");
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Erreur interne: " + e.getMessage());
+            return ResponseEntity.badRequest().body("{\"message\": \"Erreur lors de l’envoi de l’e-mail : " + e.getMessage() + "\"}");
         }
     }
+
+
+
+    // Helper method to convert MultipartFile to File
+    private File convertMultipartFileToFile(MultipartFile file) throws IOException {
+        File tempFile = new File(file.getOriginalFilename());
+        file.transferTo(tempFile);
+        return tempFile;
+    }
+
+
 }
