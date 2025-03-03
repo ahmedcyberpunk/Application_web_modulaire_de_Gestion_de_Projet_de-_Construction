@@ -46,4 +46,7 @@ public class Employee {
 
     List<Salary> salaries;
 
+    @OneToMany(mappedBy = "employee")
+    List<Demande> demandes;
+
 }
