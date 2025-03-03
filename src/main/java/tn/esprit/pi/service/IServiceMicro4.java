@@ -38,6 +38,6 @@ Contrat_Terrain findContratByTerrainId(Long id);
     public void updateContrat(Contrat_Terrain contart);
     public void deleteContrat(Integer id);
     List<Contrat_Terrain> getAllContrats();
-    public void sendEmailWithHtmlContent(String to, String subject, String body);
+
 
 }

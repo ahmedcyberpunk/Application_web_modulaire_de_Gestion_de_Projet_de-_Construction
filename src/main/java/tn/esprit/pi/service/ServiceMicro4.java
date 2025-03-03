@@ -153,22 +153,8 @@ contratRepo.deleteById(id);
  public List<Contrat_Terrain> getAllContrats() {
   return contratRepo.findAll();
  }
- @Override
 
- public void sendEmailWithHtmlContent(String to, String subject, String body) {
-  try {
-   MimeMessage message = emailSender.createMimeMessage();
-   MimeMessageHelper helper = new MimeMessageHelper(message, true);  // true pour indiquer que c'est du contenu HTML
-   helper.setTo(to);
-   helper.setSubject(subject);
-   helper.setText(body, true);  // Corps de l'email avec HTML activé
 
-   emailSender.send(message);  // Envoi de l'e-mail
-  } catch (MessagingException e) {
-   e.printStackTrace();
-   throw new RuntimeException("Erreur lors de l'envoi de l'e-mail avec image", e);
-  }
- }
 
 
 }
