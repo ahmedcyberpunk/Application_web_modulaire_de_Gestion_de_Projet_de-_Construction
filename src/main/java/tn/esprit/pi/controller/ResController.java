@@ -10,6 +10,8 @@ import com.itextpdf.layout.element.Paragraph;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -21,9 +23,12 @@ import tn.esprit.pi.entity.Contrat_Terrain;
 import tn.esprit.pi.entity.Papier_autorisation;
 import tn.esprit.pi.entity.Terrain;
 import tn.esprit.pi.service.IServiceMicro4;
-
+import org.springframework.core.io.FileSystemResource;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -35,11 +40,12 @@ import java.util.Map;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api4/terrain")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:49548"})
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:59521"})
 public class ResController {
     IServiceMicro4 serviceMicro4;
     private JavaMailSender emailSender;
 
+    private final JavaMailSender mailSender;
 
     @PostMapping("/addterrain")
     public Terrain addTerrain(@RequestBody Terrain terrain) {
@@ -137,13 +143,31 @@ public class ResController {
     }
 
 
-    @PostMapping("/send")
-    public ResponseEntity<String> sendEmailWithPdf(@RequestParam String to, @RequestParam("file") MultipartFile file) {
+    @PostMapping("/send-email-with-attachment")
+    public String sendEmailWithAttachment() {
         try {
-            // Check if the file is empty
-            if (file.isEmpty()) {
-                return ResponseEntity.badRequest().body("Aucun fichier sélectionné.");
-            }
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setFrom("olfamaddeh@gmail.com");
+            helper.setTo("olfamaddeh@gmail.com");
+            helper.setSubject("Java email with attachment | From GC");
+            helper.setText("Please find the attached documents below");
+
+            helper.addAttachment("logo.png", new File("C:\\Users\\Lenovo\\Desktop\\img\\about.jpg"));
+
+            mailSender.send(message);
+            return "success!";
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+
+    @PostMapping("/send")
+    public ResponseEntity<String> sendEmailWithImage(@RequestParam String to) {
+        try {
+            // Path to the image you want to send as an attachment (on the server filesystem)
+            String imagePath = "/path/to/images/1444.JPG";  // Replace with your actual file path
 
             // Create the email message
             MimeMessage message = emailSender.createMimeMessage();
@@ -151,19 +175,23 @@ public class ResController {
 
             // Set the email properties
             helper.setTo(to);
-            helper.setSubject("Email avec PDF (image)");
+            helper.setSubject("Email avec Image");
 
+            // Create a FileSystemResource to load the image file
+            FileSystemResource file = new FileSystemResource(imagePath);
 
-            // Add the PDF as an attachment
+            // Add the image as an attachment
+            helper.addAttachment("image.jpg", file);
 
             // Send the email
             emailSender.send(message);
 
-            return ResponseEntity.ok().body("E-mail envoyé avec succès avec le PDF.");
+            return ResponseEntity.ok().body("E-mail envoyé avec succès avec l'image.");
         } catch (MessagingException e) {
-            return ResponseEntity.status(500).body("Erreur lors de l'envoi de l'e-mail avec PDF: " + e.getMessage());
+            return ResponseEntity.status(500).body("Erreur lors de l'envoi de l'e-mail avec l'image: " + e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Erreur interne: " + e.getMessage());
         }
     }
+
 }
