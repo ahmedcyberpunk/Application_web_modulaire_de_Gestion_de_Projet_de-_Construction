@@ -23,7 +23,7 @@ public class WebConfig {
 
 
                 registry.addMapping("/**") // Apply to all endpoints
-                        .allowedOrigins("http://localhost:4200", "http://localhost:59521")
+                        .allowedOrigins("http://localhost:4200", "http://localhost:49899")
                         .allowedMethods(
                                 HttpMethod.GET.name(),
                                 HttpMethod.POST.name(),
