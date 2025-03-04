@@ -1,15 +1,21 @@
 package com.example.microservice3.service;
 
+import com.example.microservice3.entity.Echeance;
 import com.example.microservice3.entity.Facture;
+import com.example.microservice3.entity.Paiement;
+import com.example.microservice3.entity.StatutEcheance;
 import com.example.microservice3.repository.EcheanceRepository;
 import com.example.microservice3.repository.FactureRepository;
 import com.example.microservice3.repository.PaiementRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -19,6 +25,7 @@ public class FactureService implements IFactureService {
     private final FactureRepository factureRepository;
     private final EcheanceRepository echeanceRepository;
     private final PaiementRepository modePaiementRepository;
+
 
     @Override
     public Facture getFacture(Long id) {
@@ -58,5 +65,60 @@ public class FactureService implements IFactureService {
     public List<Facture> getAllFactures() {
         return factureRepository.findAll();
     }
+    /*
+    @Override
+
+    public BigDecimal calculerMontantRestant(Long factureId) {
+        // Récupérer la facture
+        Optional<Facture> optionalFacture = factureRepository.findById(factureId);
+        if (!optionalFacture.isPresent()) {
+            return BigDecimal.ZERO; // Si la facture n'existe pas
+        }
+
+        Facture facture = optionalFacture.get();
+        BigDecimal montantTotal = new BigDecimal(facture.getMontantTotal());
+
+        // Récupérer tous les paiements liés à cette facture
+        List<Paiement> paiements = modePaiementRepository.findByFactureId(factureId);
+
+        // Calculer le montant total payé
+        BigDecimal montantPaye = paiements.stream()
+                .map(Paiement::getMontantPaye)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        // Calculer et retourner le montant restant à payer
+        return montantTotal.subtract(montantPaye);
+    }*/
+
+@Override
+    public BigDecimal calculateTotalAmountToPay(Long factureId) {
+        // Retrieve the facture by ID
+        Facture facture = factureRepository.findById(factureId)
+                .orElseThrow(() -> new RuntimeException("Facture not found"));
+
+        // Initialize total amount to 0
+        BigDecimal total = BigDecimal.ZERO;
+
+        // Loop through associated echeances and sum montantDu for in-progress status
+        List<Echeance> echeances = facture.getEcheances();
+        for (Echeance echeance : echeances) {
+            if (echeance.getStatut() == StatutEcheance.EN_ATTENTE) { // Assuming IN_PROGRESS is the in-progress status
+                total = total.add(echeance.getMontantDu());
+            }
+        }
+
+        return total;
+    }
+
+    @Override
+    public String getMessageForRemainingAmount(Long factureId) {
+        // Calculate the remaining total amount to pay
+        BigDecimal totalToPay = calculateTotalAmountToPay(factureId);
+
+        // Return the message
+        return "Your remaining total to pay is " + totalToPay + " EUR";
+    }
+
+
 
 }

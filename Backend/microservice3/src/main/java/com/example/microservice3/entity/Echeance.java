@@ -1,5 +1,6 @@
 package com.example.microservice3.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,10 +29,12 @@ public class Echeance {
 
     // Plusieurs échéances sont liées à une seule facture
     @ManyToOne
+
     @JoinColumn(name = "facture_id")
     private Facture facture;
 
     // Une échéance peut être payée par un seul paiement
     @OneToOne(mappedBy = "echeance", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Paiement paiement;
 }

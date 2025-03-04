@@ -23,7 +23,7 @@ public class EcheanceController {
     @PostMapping("/addEcheance")
     public ResponseEntity<Object> addEcheance(@RequestBody Echeance echeance) {
         try {
-            // Code existant
+            System.out.println("Echéance reçue: " + echeance); // Ajoutez un log pour inspecter l'objet reçu
             Facture facture = factureRepository.findById(echeance.getFacture().getIdFacture())
                     .orElseThrow(() -> new RuntimeException("Facture non trouvée"));
 
@@ -32,10 +32,10 @@ public class EcheanceController {
             Echeance addedEcheance = echeanceService.addEcheance(echeance);
             return ResponseEntity.status(HttpStatus.CREATED).body(addedEcheance);
         } catch (Exception e) {
-            // Ajout du message d'erreur pour faciliter le débogage
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erreur lors de l'ajout de l'échéance: " + e.getMessage());
         }
     }
+
     @GetMapping("/{id}")
     public Echeance getEcheance(@PathVariable Long id) {
         return echeanceService.getEcheance(id);

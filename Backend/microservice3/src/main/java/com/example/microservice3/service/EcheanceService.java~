@@ -21,18 +21,9 @@ public class EcheanceService implements IEcheanceService {
 
     @Override
     public Echeance addEcheance(Echeance echeance) {
-        if (echeance.getFacture() == null) {
-            throw new RuntimeException("Facture cannot be null");
-        }
-
-        // You could also validate if the Facture exists in the repository:
-        if (!factureRepository.existsById(echeance.getFacture().getIdFacture())) {
-            throw new RuntimeException("Facture not found with id: " + echeance.getFacture().getIdFacture());
-        }
 
         return echeanceRepository.save(echeance);
     }
-
 
     @Override
     public void deleteEcheance(Long id) {

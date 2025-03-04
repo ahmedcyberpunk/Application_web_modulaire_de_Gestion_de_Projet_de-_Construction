@@ -49,16 +49,5 @@ public class FactureController {
         BigDecimal montantRestant = factureService.calculerMontantRestant(id);
         return ResponseEntity.ok(montantRestant);
 }*/
-
-    @GetMapping("/{factureId}/totalToPay")
-    public BigDecimal getTotalAmountToPay(@PathVariable Long factureId) {
-        return factureService.calculateTotalAmountToPay(factureId);
-    }
-
-    // Endpoint to get a message with the remaining total to pay for a specific facture
-    @GetMapping("/{factureId}/remainingMessage")
-    public String getRemainingMessage(@PathVariable Long factureId) {
-        return factureService.getMessageForRemainingAmount(factureId);
-    }
 }
 

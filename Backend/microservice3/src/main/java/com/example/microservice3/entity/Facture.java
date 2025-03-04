@@ -1,5 +1,6 @@
 package com.example.microservice3.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,11 +31,14 @@ public class Facture {
     private StatutFacture statut;
 
     private String description;
+
     @OneToMany(mappedBy = "facture", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Echeance> echeances;
 
     // Une facture peut avoir plusieurs paiements
     @OneToMany(mappedBy = "facture", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Paiement> paiements;
 }
 

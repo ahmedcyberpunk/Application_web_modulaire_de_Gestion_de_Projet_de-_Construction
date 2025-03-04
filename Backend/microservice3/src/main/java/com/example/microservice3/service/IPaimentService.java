@@ -9,6 +9,7 @@ public interface IPaimentService {
     Paiement addModePaiement(Paiement modePaiement);
 
     void deleteModePaiement(Integer id);
+    Paiement updatePaiement(Integer id, Paiement paiement);
 
 
 }

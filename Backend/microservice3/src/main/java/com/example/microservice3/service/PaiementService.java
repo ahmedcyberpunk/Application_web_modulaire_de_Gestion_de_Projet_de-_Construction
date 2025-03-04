@@ -39,4 +39,19 @@ public class PaiementService implements IPaimentService {
             throw new RuntimeException("ModePaiement not found");
         }
     }
+    public Paiement updatePaiement(Integer id, Paiement paiement) {
+        if (!modePaiementRepository.existsById(id)) {
+            throw new RuntimeException("Paiement not found with id: " + id);
+        }
+
+        Paiement existingPaiement = modePaiementRepository.findById(id).orElseThrow();
+
+        existingPaiement.setMontantPaye(paiement.getMontantPaye());
+        existingPaiement.setDatePaiement(paiement.getDatePaiement());
+        existingPaiement.setModePaiement(paiement.getModePaiement());
+        existingPaiement.setFacture(paiement.getFacture());
+
+        return modePaiementRepository.save(existingPaiement);
+    }
+
 }

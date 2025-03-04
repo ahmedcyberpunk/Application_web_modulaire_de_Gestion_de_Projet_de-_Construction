@@ -2,6 +2,7 @@ package com.example.microservice3.service;
 
 import com.example.microservice3.entity.Facture;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface IFactureService {
@@ -11,5 +12,7 @@ public interface IFactureService {
 
     void deleteFacture(Long id);
     List<Facture> getAllFactures();
-
+ //   BigDecimal calculerMontantRestant(Long factureId);
+ BigDecimal calculateTotalAmountToPay(Long factureId);
+    String getMessageForRemainingAmount(Long factureId);
 }

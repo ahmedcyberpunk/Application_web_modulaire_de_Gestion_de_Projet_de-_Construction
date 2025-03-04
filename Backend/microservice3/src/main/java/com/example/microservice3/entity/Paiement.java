@@ -1,5 +1,6 @@
 package com.example.microservice3.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +30,7 @@ public class Paiement {
 
     // Plusieurs paiements peuvent être liés à une seule facture
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "facture_id")
     private Facture facture;
 
