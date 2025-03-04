@@ -110,14 +110,7 @@ public class FactureService implements IFactureService {
         return total;
     }
 
-    @Override
-    public String getMessageForRemainingAmount(Long factureId) {
-        // Calculate the remaining total amount to pay
-        BigDecimal totalToPay = calculateTotalAmountToPay(factureId);
 
-        // Return the message
-        return "Your remaining total to pay is " + totalToPay + " EUR";
-    }
 
 
 
