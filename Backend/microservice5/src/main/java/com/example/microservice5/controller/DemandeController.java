@@ -25,7 +25,10 @@ public class DemandeController {
     public Demande addDemande(@RequestBody Demande demande){
         return demandeService.addDemande(demande);
     }
-
+    @DeleteMapping("/deletedemande/{id}")
+    public void deleteDemande(Long id){
+        demandeService.deleteDemande(id);
+    }
 
     @PostMapping("/send")
     public String sendEmail(@RequestBody EmailRequest request) {
@@ -35,6 +38,7 @@ public class DemandeController {
 }
 
 // DTO pour recevoir la requête
+
 class EmailRequest {
     private String email;
     private String subject;
@@ -45,5 +49,5 @@ class EmailRequest {
     public String getSubject() { return subject; }
     public void setSubject(String subject) { this.subject = subject; }
     public String getMessage() { return message; }
-    public void setMessage(String message) { this.message = message; }
+        public void setMessage(String message) { this.message = message; }
 }

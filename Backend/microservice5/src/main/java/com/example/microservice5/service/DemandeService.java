@@ -25,14 +25,17 @@ public class DemandeService {
     public List<Demande> getAllDemandes() {
         return demandeRepository.findAll();
     }
+    public void deleteDemande(Long id) {
+        demandeRepository.deleteById(id);
+    }
 
 
     private JavaMailSender mailSender;
 
     public void sendEmail(String clientEmail, String subject, String message) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom("ton-email-d-envoi@gmail.com"); // L'email qui envoie (PAS celui du client)
-        mailMessage.setTo("rezguiiheb06@gmail.com"); // TOI, tu reçois l'email ici
+
+        mailMessage.setTo("rezguiiheb06@gmail.com");
         mailMessage.setSubject(subject);
         mailMessage.setText("De : " + clientEmail + "\n\n" + message);
 
