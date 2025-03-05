@@ -32,8 +32,8 @@ public class EmailController {
 
             helper.setFrom("olfamaddeh@gmail.com");
             helper.setTo("olfamaddeh@gmail.com");
-            helper.setSubject("Java email with attachment | From GC");
-            helper.setText("Please find the attached documents below");
+            helper.setSubject("Demande de Validation de Document");
+            helper.setText("Residence id:15");
 
             // Use the provided file path dynamically
             File file = new File(filePath);

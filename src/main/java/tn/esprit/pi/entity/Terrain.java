@@ -25,7 +25,7 @@ public class Terrain {
     @Enumerated(EnumType.STRING)
     Typesol typeSol;
     String imagePath;
-
+    int notif;
     @OneToMany(cascade = CascadeType.ALL ,mappedBy = "terrain")
     @JsonIgnore
     List<Papier_autorisation> papierAutorisationConstructions;

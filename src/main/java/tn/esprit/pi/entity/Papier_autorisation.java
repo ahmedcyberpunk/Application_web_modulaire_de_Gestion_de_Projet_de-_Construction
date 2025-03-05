@@ -25,7 +25,7 @@ public class Papier_autorisation {
     String  description;
     String imagePath;
 
-
+int notif;
     @ManyToOne
     @JsonIgnore
    Terrain terrain;

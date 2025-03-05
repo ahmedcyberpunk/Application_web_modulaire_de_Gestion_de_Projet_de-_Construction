@@ -51,7 +51,6 @@ public class ServiceMicro4 implements IServiceMicro4 {
    existingTerrain.setSuperficie(terrain.getSuperficie());
    existingTerrain.setStatutJuridique(terrain.getStatutJuridique());
    existingTerrain.setTypeSol(terrain.getTypeSol());
-   existingTerrain.setNotif(terrain.getNotif());
 
 
    return terrainRepo.save(existingTerrain);
