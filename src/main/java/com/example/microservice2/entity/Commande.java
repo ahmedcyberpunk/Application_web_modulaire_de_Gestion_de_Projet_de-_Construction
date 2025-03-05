@@ -1,9 +1,9 @@
 package com.example.microservice2.entity;
 
-import com.example.microservice2.entity.EtatCommande;
-import com.example.microservice2.entity.Ressource;
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.Date;
 import java.util.List;
@@ -17,6 +17,7 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 public class Commande {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCommande;
@@ -27,11 +28,11 @@ public class Commande {
     @Enumerated(EnumType.STRING)
     private EtatCommande etatCommande;
 
-    @ManyToMany
-    @JoinTable(
-            name = "commande_ressource",
-            joinColumns = @JoinColumn(name = "id_commande"),
-            inverseJoinColumns = @JoinColumn(name = "id_produit")
-    )
-    private List<Ressource> ressources;
+    // Champ pour stocker les ressources sous forme de chaîne JSON
+    @Lob
+    private String ressourcesJson;
+
+    // Méthode pour récupérer les ressources depuis la chaîne JSON
+
+
 }

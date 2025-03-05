@@ -31,7 +31,7 @@ public class CommandeService  implements CommandeInter{
         Commande nouvelleCommande = commandeRepo.save(commande);
 
         // 📧 Envoyer un email après la commande
-        String destinataire = "mohamedkhaled.tebourbi@esprit.tn"; // À remplacer par l'email réel du client
+        String destinataire = "khaled.tebourbi69@gmail.com"; // À remplacer par l'email réel du client
         String sujet = "Confirmation de votre commande";
         String message = "<h2>Merci pour votre commande !</h2>"
                 + "<p>Votre commande a été bien reçue.</p>"

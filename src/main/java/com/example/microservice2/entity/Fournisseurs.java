@@ -1,5 +1,6 @@
 package com.example.microservice2.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;
@@ -23,6 +24,7 @@ public class Fournisseurs {
     private String emailFournisseur;
     private String telephoneFournisseur;
 
-    @OneToMany(mappedBy = "fournisseur", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "fournisseur", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Ressource> ressources;
 }

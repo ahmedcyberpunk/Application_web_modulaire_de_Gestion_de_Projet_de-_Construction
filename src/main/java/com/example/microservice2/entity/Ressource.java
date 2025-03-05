@@ -2,11 +2,13 @@ package com.example.microservice2.entity;
 
 import com.example.microservice2.entity.Fournisseurs;
 import com.example.microservice2.entity.Typeproduit;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import com.example.microservice2.entity.Commande;
-
-import java.util.List;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -28,9 +30,24 @@ public class Ressource {
     @Enumerated(EnumType.STRING)
     private Typeproduit typeProduit;
 
+    @Column(nullable = false)
+    private boolean active = true;
+    @Column(nullable = true)
+    @JsonProperty("imageUrl")
+    private String imageUrl; // Stocke l'URL de l'image
+
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String imageData;
+
+
     @ManyToOne
     @JoinColumn(name = "id_fournisseur", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Fournisseurs fournisseur;
 
 
+    public Object getId() {
+        return idProduit;
+    }
 }
