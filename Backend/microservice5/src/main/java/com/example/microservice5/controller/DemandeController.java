@@ -26,7 +26,7 @@ public class DemandeController {
         return demandeService.addDemande(demande);
     }
     @DeleteMapping("/deletedemande/{id}")
-    public void deleteDemande(Long id){
+    public void deleteDemande(@PathVariable Long id){
         demandeService.deleteDemande(id);
     }
 

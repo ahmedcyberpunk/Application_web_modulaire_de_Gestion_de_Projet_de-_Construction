@@ -26,8 +26,13 @@ public class DemandeService {
         return demandeRepository.findAll();
     }
     public void deleteDemande(Long id) {
-        demandeRepository.deleteById(id);
+        if (demandeRepository.existsById(id)) {
+            demandeRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Demande introuvable avec l'ID : " + id);
+        }
     }
+
 
 
     private JavaMailSender mailSender;
