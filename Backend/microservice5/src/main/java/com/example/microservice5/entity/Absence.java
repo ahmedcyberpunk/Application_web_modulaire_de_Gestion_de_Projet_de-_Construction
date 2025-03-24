@@ -23,7 +23,8 @@ public class Absence {
      LocalDate dateDebut;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
      LocalDate dateFin;
-
+    // Durée en heures pour les retards
+    Double dureeHeures;
     @Enumerated(EnumType.STRING)
      AbsenceType type;
 

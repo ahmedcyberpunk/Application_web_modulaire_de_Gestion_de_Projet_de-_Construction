@@ -8,9 +8,11 @@ import com.example.microservice5.repository.AbsenceRepository;
 import com.example.microservice5.repository.EmployeeRepository;
 import com.example.microservice5.repository.PerformanceRepository;
 import com.example.microservice5.repository.SalaryRepository;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -77,7 +79,8 @@ public class SalaryService implements ISalaryService {
                 employee.getId(), mois.withDayOfMonth(1), mois.withDayOfMonth(mois.lengthOfMonth()));
 
         long deduction = 0L;
-        long deductionParJour = employee.getSalaire() / 30;
+        long deductionParJour = employee.getSalaire() / 26;
+        long salaireParHeure = deductionParJour / 8;
 
         for (Absence absence : absences) {
             long joursAbsence = absence.getDateFin().toEpochDay() - absence.getDateDebut().toEpochDay() + 1;
@@ -86,12 +89,30 @@ public class SalaryService implements ISalaryService {
                     deduction += joursAbsence * deductionParJour;
                     break;
                 case MALADIE:
-                    deduction += (joursAbsence * deductionParJour) / 2;
+                    if (joursAbsence <= 3) {
+                        // Les 3 premiers jours pris en charge par CNAM
+                        deduction += 0;
+                    } else if (joursAbsence <= 15) {
+                        // 50% de déduction du 4e au 15e jour
+                        deduction += (joursAbsence - 3) * (deductionParJour / 2);
+                    } else {
+                        // 50% du 4e au 15e et 75% au-delà
+                        deduction += (12 * (deductionParJour / 2))
+                                + ((joursAbsence - 15) * ((deductionParJour * 3) / 4));
+                    }
                     break;
+
                 case RETARD:
-                    deduction += (deductionParJour / 4);
+                    // Déduction au prorata des heures manquées
+                    if (absence.getDureeHeures() != null && absence.getDureeHeures() > 0) {
+                        deduction += absence.getDureeHeures() * salaireParHeure;
+                    }
+                    break;
+                case CONGE_PAYE:
+                    // Pas de déduction
                     break;
                 default:
+                    // Si jamais d'autres types sont ajoutés
                     break;
             }
         }
@@ -103,14 +124,23 @@ public class SalaryService implements ISalaryService {
         List<Performance> performances = performanceRepository.findByEmployeeIdAndDateEvaluationBetween(
                 employeeId, mois.withDayOfMonth(1), mois.withDayOfMonth(mois.lengthOfMonth()));
 
+        Employee employee = findEmployeeById(employeeId);
+        long salaireDeBase = employee.getSalaire();  // Salaire de base de l'employé
         long prime = 0L;
+
         for (Performance perf : performances) {
-            if (perf.getNote() >= 8) {
-                prime += 80L;
+            if (perf.getNote() >= 9) {
+                prime+= Math.round(salaireDeBase * 0.20); // 20% du salaire
+            } else if (perf.getNote() >= 8) {
+                prime += Math.round(salaireDeBase * 0.15); // 15% du salaire
+            } else if (perf.getNote() >= 6) {
+                prime += Math.round(salaireDeBase * 0.10); // 10% du salaire
             } else if (perf.getNote() >= 5) {
-                prime += 20L;
+                prime += Math.round(salaireDeBase * 0.05); // 5% du salaire
             }
+            // Pas de prime pour les notes inférieures à 5
         }
+
         return prime;
     }
 
@@ -135,4 +165,7 @@ public class SalaryService implements ISalaryService {
     public List<Salary> getHistoriqueSalaire(Long employeeId) {
         return salaryRepository.findByEmployeeIdOrderByMoisDesc(employeeId);
     }
+
+
+
 }

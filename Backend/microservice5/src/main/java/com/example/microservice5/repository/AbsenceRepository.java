@@ -7,14 +7,19 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Repository
 public interface AbsenceRepository extends JpaRepository<Absence, Long> {
     List<Absence> findByEmployeeId(Long employeeId);
     List<Absence> findByEmployeeIdAndDateDebutBetween(Long employeeId, LocalDate start, LocalDate end);
-    @Query("SELECT a.id, a.dateDebut, a.dateFin, a.type, e.id, e.nom, e.prenom " +
-            "FROM Absence a JOIN a.employee e")
+    @Query("SELECT a.id, a.dateDebut, a.dateFin, a.type, a.employee.id, e.nom, e.prenom, a.dureeHeures " +
+            "FROM Absence a " +
+            "JOIN a.employee e")
     List<Object[]> findAllAbsencesWithEmployeeInfo();
+
+
+
 
 }

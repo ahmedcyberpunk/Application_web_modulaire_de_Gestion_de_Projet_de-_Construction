@@ -28,14 +28,15 @@ public class AbsenceController {
         return absenceService.affecterAbsenceEmployee(absence, employeeId);
     }
 
-
     @PutMapping("/update/{id}")
     public Absence updateAbsence(@PathVariable Long id,
                                  @RequestParam AbsenceType newType,
-                                 @RequestParam LocalDate newDateDebut,
-                                 @RequestParam LocalDate newDateFin) {
-        return absenceService.updateAbsence(id, newType, newDateDebut, newDateFin);
+                                 @RequestParam(required = false) LocalDate newDateDebut,
+                                 @RequestParam(required = false) LocalDate newDateFin,
+                                 @RequestParam(required = false) Double newDureeHeures) {
+        return absenceService.updateAbsence(id, newType, newDateDebut, newDateFin, newDureeHeures);
     }
+
 
 
 

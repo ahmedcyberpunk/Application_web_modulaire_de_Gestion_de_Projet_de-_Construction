@@ -28,19 +28,32 @@ public class AbsenceService  implements IAbsenceService{
     public Absence affecterAbsenceEmployee(Absence absence, Long employeeId) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new RuntimeException("Employee not found"));
+
+        if (absence.getType() == AbsenceType.RETARD
+                && (absence.getDureeHeures() == null || absence.getDureeHeures() <= 0)) {
+            throw new RuntimeException("La durée en heures est obligatoire pour un retard");
+        }
+
         absence.setEmployee(employee);
         return absenceRepository.save(absence);
     }
 
-
-    public Absence updateAbsence(Long id, AbsenceType newType, LocalDate newDateDebut, LocalDate newDateFin) {
+    public Absence updateAbsence(Long id, AbsenceType newType, LocalDate newDateDebut, LocalDate newDateFin, Double newDureeHeures) {
         Absence absence = absenceRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Absence non trouvée"));
 
         // Mise à jour des valeurs
         absence.setType(newType);
-        absence.setDateDebut(newDateDebut);
-        absence.setDateFin(newDateFin);
+
+        if (newType == AbsenceType.RETARD) {
+            absence.setDureeHeures(newDureeHeures);
+            absence.setDateDebut(absence.getDateDebut());
+            absence.setDateFin(absence.getDateFin());
+        } else {
+            absence.setDateDebut(newDateDebut);
+            absence.setDateFin(newDateFin);
+            absence.setDureeHeures(null);
+        }
 
         return absenceRepository.save(absence);
     }
@@ -79,6 +92,9 @@ public class AbsenceService  implements IAbsenceService{
             absenceMap.put("employeeId", row[4]);
             absenceMap.put("nom", row[5]);
             absenceMap.put("prenom", row[6]);
+            absenceMap.put("dureeHeures", row[7]);
+
+
             absences.add(absenceMap);
         }
         return absences;
