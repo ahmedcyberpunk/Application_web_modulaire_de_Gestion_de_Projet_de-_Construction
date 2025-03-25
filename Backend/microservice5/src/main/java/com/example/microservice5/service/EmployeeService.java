@@ -14,16 +14,17 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class EmployeeService  implements IEmployeeService{
+public class EmployeeService  implements IEmployeeService {
     SalaryRepository salaryRepository;
     AbsenceRepository absenceRepository;
     EmployeeRepository employeeRepository;
     PerformanceRepository performanceRepository;
 
-    @Scheduled(cron = "0 0 0 1 * ?")  //
+    @Scheduled(cron = "0 0 0 1 * ?")
     @Transactional
     public void resetHeuresSuppEtAvance() {
         employeeRepository.resetHeuresSuppEtAvance();
@@ -38,23 +39,24 @@ public class EmployeeService  implements IEmployeeService{
         return employeeRepository.findAll();
 
     }
+
     public Employee addEmployee(Employee employee) {
         return employeeRepository.save(employee);
     }
 
     public void deleteEmployee(Long id) {
-    if (employeeRepository.existsById(id)){
-    employeeRepository.deleteById(id);
-    }else {
-    throw new RuntimeException("Employee not found");
-}
+        if (employeeRepository.existsById(id)) {
+            employeeRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Employee not found");
+        }
     }
 
     public Employee updateEmployee(Employee employee) {
         if (employeeRepository.existsById(employee.getId())) {
-          return   employeeRepository.save(employee);
-        }else {
-       throw new RuntimeException("Employee not found");
+            return employeeRepository.save(employee);
+        } else {
+            throw new RuntimeException("Employee not found");
         }
     }
 
@@ -67,6 +69,7 @@ public class EmployeeService  implements IEmployeeService{
     public List<Employee> getEmployeesSortedBySalary() {
         return employeeRepository.findAll(Sort.by(Sort.Direction.ASC, "salaire"));
     }
+
     //search
     public List<Employee> searchEmployees(String keyword) {
         return employeeRepository.findByNomContainingIgnoreCaseOrPrenomContainingIgnoreCase(keyword, keyword);
@@ -116,5 +119,27 @@ public class EmployeeService  implements IEmployeeService{
         // Sauvegarder les modifications dans la base de données
         employeeRepository.save(employee);
     }
+
+//disponibilité
+public Map<String, List<Employee>> getEmployesDisponiblesParPoste() {
+    List<Employee> employees = employeeRepository.findAll();
+
+    // Récupérer la date actuelle
+    LocalDate today = LocalDate.now(); // La date d'aujourd'hui (ex. 25/03/2025)
+
+    // Filtrer les employés disponibles (sans absence en cours)
+    List<Employee> employesDisponibles = employees.stream()
+            .filter(employee -> employee.getAbsences().stream()
+                    .noneMatch(absence -> {
+                        // Vérifier si la date actuelle tombe dans l'intervalle de l'absence
+                        return !absence.getDateDebut().isAfter(today) && !absence.getDateFin().isBefore(today);
+                    }))
+            .collect(Collectors.toList());
+
+    // Regrouper par poste
+    return employesDisponibles.stream()
+            .collect(Collectors.groupingBy(Employee::getPoste));
+}
+
 
 }

@@ -66,5 +66,9 @@ public class EmployeeController {
         employeeService.demanderAvanceSalaire(employeeId, montant);
     }
 
-
+    @GetMapping("/disponibilite")
+    public ResponseEntity<Map<String, List<Employee>>> getDisponiblesParPoste() {
+        Map<String, List<Employee>> disponibles = employeeService.getEmployesDisponiblesParPoste();
+        return ResponseEntity.ok(disponibles);
+    }
 }
