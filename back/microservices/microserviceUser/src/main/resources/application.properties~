@@ -18,5 +18,5 @@ spring.jpa.show-sql=true
 spring.jpa.hibernate.ddl-auto=update
 server.port=8088
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
-spring.main.web-application-type=reactive
+
 
