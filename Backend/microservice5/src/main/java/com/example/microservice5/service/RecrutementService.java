@@ -8,13 +8,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class RecrutementService {
 
     @Autowired
     private RecrutementRepository recrutementRepository;
 
-    // Méthode pour ajouter un recrutement
+
     public Recrutement saveRecrutement(Recrutement recrutement) {
         return recrutementRepository.save(recrutement);
     }
@@ -30,6 +31,18 @@ public class RecrutementService {
     }
     public Recrutement getRecrutementById(Long id) {
         return recrutementRepository.findById(id).orElse(null);
+    }
+
+    // Mettre à jour le statut (traité / non traité)
+    public boolean updateRecrutementStatus(Long id, boolean status) {
+        Optional<Recrutement> recrutementOptional = recrutementRepository.findById(id);
+        if (recrutementOptional.isPresent()) {
+            Recrutement recrutement = recrutementOptional.get();
+            recrutement.setTraiter(status);
+            recrutementRepository.save(recrutement);
+            return true;
+        }
+        return false;
     }
 
 

@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -16,23 +19,29 @@ public class Recrutement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;  // Identifiant unique
+    private Long id;
 
-    private String nom;  // Nom du candidat
-    private String prenom;  // Prénom du candidat
-    private String commentaire;  // Commentaire sur la demande
+    private String nom;
+    private String prenom;
+    private String commentaire;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    LocalDate dateNaissance;
+    String email;
+    String telephone;
+    String poste;
+    boolean traiter;
 
     @Lob
-    private byte[] fichier;  // Le fichier (par exemple, un CV ou lettre de motivation)
+    private byte[] fichier;
 
     @ManyToOne
     @JsonIgnore
-    private Employee employee;  // Lien avec l'entité Employee (si nécessaire)
+    private Employee employee;
 
     @Enumerated(EnumType.STRING)
     private TypeDemande typeDemande;
 
-    // Enum pour les types de demande
+
     public enum TypeDemande {
         RECRUTEMENT,
         STAGE,

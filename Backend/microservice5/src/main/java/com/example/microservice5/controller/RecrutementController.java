@@ -7,7 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/recrutement")
@@ -23,7 +25,11 @@ public class RecrutementController {
             @RequestParam("prenom") String prenom,
             @RequestParam("commentaire") String commentaire,
             @RequestParam("fichier") MultipartFile fichier,
-            @RequestParam("typeDemande") String typeDemande){
+            @RequestParam("dateNaissance") String dateNaissance,
+            @RequestParam("email") String email,
+            @RequestParam("telephone") String telephone,
+            @RequestParam("poste") String poste,
+            @RequestParam("typeDemande") String typeDemande) {
         try {
             byte[] fichierBytes = fichier.getBytes();
 
@@ -32,14 +38,20 @@ public class RecrutementController {
             recrutement.setPrenom(prenom);
             recrutement.setCommentaire(commentaire);
             recrutement.setFichier(fichierBytes);
+            recrutement.setDateNaissance(LocalDate.parse(dateNaissance));  // Conversion de la date
+            recrutement.setEmail(email);
+            recrutement.setTelephone(telephone);
+            recrutement.setPoste(poste);
             recrutement.setTypeDemande(Recrutement.TypeDemande.valueOf(typeDemande.toUpperCase()));
 
             Recrutement savedRecrutement = recrutementService.saveRecrutement(recrutement);
             return ResponseEntity.ok(savedRecrutement);
         } catch (Exception e) {
+            e.printStackTrace();  // Log de l'exception
             return ResponseEntity.status(400).body(null); // Retourne une erreur en cas d'échec
         }
     }
+
 
     @GetMapping("/all")
     public ResponseEntity<List<Recrutement>> getAllRecrutements() {
@@ -67,4 +79,15 @@ public class RecrutementController {
         }
     }
 
+
+    // Mettre à jour le statut d'une demande
+    @PutMapping("/updateStatus/{id}")
+    public ResponseEntity<String> updateStatus(@PathVariable Long id, @RequestBody Map<String, Boolean> status) {
+        boolean updated = recrutementService.updateRecrutementStatus(id, status.get("traiter"));
+        if (updated) {
+            return ResponseEntity.ok("Statut mis à jour avec succès !");
+        } else {
+            return ResponseEntity.badRequest().body("Erreur : demande non trouvée");
+        }
+    }
 }
