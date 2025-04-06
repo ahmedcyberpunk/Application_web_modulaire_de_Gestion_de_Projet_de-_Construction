@@ -12,8 +12,10 @@ import com.example.microservice5.repository.SalaryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
-import java.util.Base64;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -163,7 +165,64 @@ public class SalaryService implements ISalaryService {
     }
 
     public List<Salary> getHistoriqueSalaire(Long employeeId) {
-        return salaryRepository.findByEmployeeIdOrderByMoisDesc(employeeId);
+        List<Salary> allSalaries = salaryRepository.findByEmployeeIdOrderByMoisDesc(employeeId);
+        List<Salary> uniqueSalaries = new ArrayList<>();
+
+        Set<String> salarySignatures = new HashSet<>();
+
+        for (Salary salaire : allSalaries) {
+
+            String signature = salaire.getMois() + "|" +
+                    salaire.getSalaireBrut() + "|" +
+                    salaire.getAvanceSalaire() + "|" +
+                    salaire.getSalaireImposable() + "|" +
+                    salaire.getSalaireNet() + "|" +
+                    salaire.getCotisationCNSS() + "|" +
+                    salaire.getCotisationRetraite() + "|" +
+                    salaire.getDeductions() + "|" +
+                    salaire.getPrimePerformance() + "|" +
+                    salaire.getPrimeHeuresSupp() + "|" +
+                    salaire.getImpotRevenu() ;
+
+
+            if (!salarySignatures.contains(signature)) {
+                uniqueSalaries.add(salaire);
+                salarySignatures.add(signature);
+            }
+        }
+
+        return uniqueSalaries;
+    }
+
+
+    public List<Salary> getSalariesBetweenDates(Long employeeId, LocalDate startDate, LocalDate endDate) {
+        List<Salary> allSalaries = salaryRepository.findByEmployeeIdAndMoisBetween(employeeId, startDate, endDate);
+        List<Salary> uniqueSalaries = new ArrayList<>();
+
+        Set<String> salarySignatures = new HashSet<>();
+
+        for (Salary salaire : allSalaries) {
+
+            String signature = salaire.getMois() + "|" +
+                    salaire.getSalaireBrut() + "|" +
+                    salaire.getAvanceSalaire() + "|" +
+                    salaire.getSalaireImposable() + "|" +
+                    salaire.getSalaireNet() + "|" +
+                    salaire.getCotisationCNSS() + "|" +
+                    salaire.getCotisationRetraite() + "|" +
+                    salaire.getDeductions() + "|" +
+                    salaire.getPrimePerformance() + "|" +
+                    salaire.getPrimeHeuresSupp() + "|" +
+                    salaire.getImpotRevenu() ;
+
+
+            if (!salarySignatures.contains(signature)) {
+                uniqueSalaries.add(salaire);
+                salarySignatures.add(signature);
+            }
+        }
+
+        return uniqueSalaries;
     }
 
 

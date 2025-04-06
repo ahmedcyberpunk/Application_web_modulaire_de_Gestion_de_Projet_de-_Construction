@@ -29,5 +29,15 @@ public class  SalaryController {
     public List<Salary> getHistoriqueSalaire(@PathVariable Long employeeId) {
         return salaryService.getHistoriqueSalaire(employeeId);
     }
+
+    @GetMapping("/historique/{employeeId}/filtre")
+    public List<Salary> getSalariesBetweenDates(
+            @PathVariable Long employeeId,
+            @RequestParam("startDate") LocalDate startDate,
+            @RequestParam("endDate") LocalDate endDate) {
+
+        return salaryService.getSalariesBetweenDates(employeeId, startDate, endDate);
+    }
+
 }
 
