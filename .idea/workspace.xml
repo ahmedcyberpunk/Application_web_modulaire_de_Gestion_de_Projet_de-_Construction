@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1c9bd582-be6a-4cfe-b36e-30c738d366f8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/backend.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/eureka/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/eureka/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/eureka/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/eureka/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/eureka/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/eureka/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/eureka/src/main/java/esprit/eureka/EurekaApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/eureka/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/eureka/src/test/java/esprit/eureka/EurekaApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/gatway/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/gatway/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/gatway/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/gatway/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/gatway/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/gatway/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/gatway/src/main/java/esprit/gatway/GatwayApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/gatway/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/gatway/src/test/java/esprit/gatway/GatwayApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceAdministration" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/entity/SearchHistory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/repository/SearchHistoryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/src/main/java/com/example/microserviceuser/Configuration/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/src/main/java/com/example/microserviceuser/Configuration/WebConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/src/main/java/com/example/microserviceuser/Controller/AuthController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/src/main/java/com/example/microserviceuser/Entity/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/src/main/java/com/example/microserviceuser/Entity/UserDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/src/main/java/com/example/microserviceuser/MicroserviceUserApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/src/main/java/com/example/microserviceuser/Repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/src/main/java/com/example/microserviceuser/Service/auth/CustomUserDetailsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/src/main/java/com/example/microserviceuser/Service/auth/JwtAuthenticationFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/src/main/java/com/example/microserviceuser/Service/auth/JwtUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/src/main/java/com/example/microserviceuser/Service/auth/MailService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/src/main/java/com/example/microserviceuser/Service/auth/PasswordResetTokenService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back/microservices/microserviceUser/src/test/java/com/example/microserviceuser/MicroserviceUserApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/microservices/microserviceAdministration/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/back/microservices/microserviceAdministration/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/configs/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/configs/WebConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/controller/EmailController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/controller/EmailController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/controller/ResController.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/controller/ResController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/entity/Contrat_Terrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/entity/Contrat_Terrain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/entity/Terrain.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/entity/Terrain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/repository/ContratRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/repository/ContratRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/repository/TerrainRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/repository/TerrainRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/service/IServiceMicro4.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/service/IServiceMicro4.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/service/ServiceMicro4.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java/tn/esprit/pi/service/ServiceMicro4.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2vQ7Uwz6t5DC8JLW7MohAU6bJkf" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.MicroserviceUserApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.PiApplication.executor&quot;: &quot;Run&quot;,
+    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lenovo/Desktop/backend - Copie&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.MicroserviceUserApplication">
+    <configuration name="EurekaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="eureka" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="esprit.eureka.EurekaApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GatwayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="gatway" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="esprit.gatway.GatwayApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MicroserviceUserApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="tpFoyer-17" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.microserviceuser.MicroserviceUserApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="pi" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="tn.esprit.pi.PiApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1c9bd582-be6a-4cfe-b36e-30c738d366f8" name="Changes" comment="" />
+      <created>1744065464390</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1744065464390</updated>
+      <workItem from="1744065465459" duration="79000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
