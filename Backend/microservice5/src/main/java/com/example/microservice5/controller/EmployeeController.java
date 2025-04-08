@@ -71,4 +71,10 @@ public class EmployeeController {
         Map<String, List<Employee>> disponibles = employeeService.getEmployesDisponiblesParPoste();
         return ResponseEntity.ok(disponibles);
     }
+
+    // Endpoint pour récupérer le total des employés par poste
+    @GetMapping("/total")
+    public Map<String, Long> getTotalEmployeesByPoste() {
+        return employeeService.getTotalEmployeesByPoste();
+    }
 }

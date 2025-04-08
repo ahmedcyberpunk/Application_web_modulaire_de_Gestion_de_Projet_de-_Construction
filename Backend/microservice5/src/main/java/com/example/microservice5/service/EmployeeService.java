@@ -139,7 +139,15 @@ public Map<String, List<Employee>> getEmployesDisponiblesParPoste() {
     // Regrouper par poste
     return employesDisponibles.stream()
             .collect(Collectors.groupingBy(Employee::getPoste));
+
+
 }
 
+    // Méthode pour obtenir le nombre total d'employés par poste
+    public Map<String, Long> getTotalEmployeesByPoste() {
+        List<Employee> employees = employeeRepository.findAll(); // Récupère tous les employés
 
+        return employees.stream()
+                .collect(Collectors.groupingBy(Employee::getPoste, Collectors.counting())); // Nombre total d'employés par poste
+    }
 }
