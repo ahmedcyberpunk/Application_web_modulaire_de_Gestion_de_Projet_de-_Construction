@@ -6,14 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.pigc.Entity.*;
-import tn.esprit.pigc.Repository.ConstructionEquipmentRepository;
-import tn.esprit.pigc.Repository.EmployeeRepository;
-import tn.esprit.pigc.Repository.EquipmentInspectionRepository;
-import tn.esprit.pigc.Repository.PPERepository;
+import tn.esprit.pigc.Repository.*;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -26,6 +21,7 @@ public  class SMServiceImpl implements ISM {
     private EmployeeRepository employeeRepository;
     private ConstructionEquipmentRepository constructionEquipmentRepository;
     private EquipmentInspectionRepository equipmentInspectionRepository;
+    private SafetyAlertRepository safetyAlertRepository;
 
     public List<PPE> getAllPPE() {
         return ppeRepository.findAll();
@@ -127,7 +123,7 @@ public  class SMServiceImpl implements ISM {
         // Construct the message based on the inspection result and item type
         String message = "Inspection for " + (inspection.getItemType() == ItemType.EQUIPMENT ? "equipment" : "PPE")
                 + " with ID: " + inspection.getInspectionId()
-                + " has been finalized. Result: " + inspection.getResult();
+                + " has been finalized. Result: " + inspection.getResult    ();
 
         // In a real-world scenario, you might send this as an email or push notification
         // For simplicity, here we just print it to the console
@@ -262,6 +258,47 @@ public  class SMServiceImpl implements ISM {
             constructionEquipmentRepository.deleteById(id);
         }
     }
+
+    public List<String> getSafetyAlerts() {
+        List<String> alerts = new ArrayList<>();
+
+        // ✅ List of required PPE types
+        List<String> requiredPPE = Arrays.asList("Helmet", "Gloves", "Suit", "Boots", "Goggles"); // Add more if needed
+
+        // 🔍 Check for missing PPE for employees
+        List<Employee> employees = employeeRepository.findAll();
+        for (Employee employee : employees) {
+            for (String ppeType : requiredPPE) {
+                boolean hasPPE = employee.getPPEs().stream()
+                        .anyMatch(ppe -> ppe.getType().equalsIgnoreCase(ppeType));
+                if (!hasPPE) {
+                    // Updated to use employee's name instead of ID
+                    alerts.add("⚠ " + employee.getFirstName() + " is missing " + ppeType + "!");
+                }
+            }
+        }
+
+        // 🔍 Check for construction equipment failures
+        List<ConstructionEquipment> equipmentList = constructionEquipmentRepository.findAll();
+        for (ConstructionEquipment equipment : equipmentList) {
+            if (equipment.getStatusEquipment() == StatusEquipment.NEEDS_MAINTENANCE) {
+                // Updated to use equipment name instead of ID
+                alerts.add("⚠ " + equipment.getType() + " requires maintenance.");
+            }
+            if (equipment.getStatusEquipment() == StatusEquipment.OUT_OF_SERVICE) {
+                // Updated to use equipment name instead of ID
+                alerts.add("⛔ " + equipment.getType() + " is out of service!");
+            }
+        }
+
+        return alerts;
+    }
+    public List<SafetyAlert> getActiveSafetyAlerts() {
+        return safetyAlertRepository.findAll(); // Adjust this if you have a specific query for active alerts
+    }
+
+
+
 
 
 }
