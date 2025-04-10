@@ -45,7 +45,8 @@ public class Ressource {
     @JoinColumn(name = "id_fournisseur", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Fournisseurs fournisseur;
-
+    @Column(nullable = false)
+    private int quantiteDisponible;
 
     public Object getId() {
         return idProduit;

@@ -24,7 +24,9 @@ public class Fournisseurs {
     private String emailFournisseur;
     private String telephoneFournisseur;
 
-    @OneToMany(mappedBy = "fournisseur", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "fournisseur", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Ressource> ressources;
+    @Column(nullable = false)
+    private int quantiteDisponible;
 }

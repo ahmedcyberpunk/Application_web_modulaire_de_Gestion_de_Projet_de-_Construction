@@ -1,11 +1,11 @@
 package com.example.microservice2.controller;
 
-import com.example.microservice2.entity.CartRessource;
-import com.example.microservice2.entity.Commande;
-import com.example.microservice2.entity.Fournisseurs;
-import com.example.microservice2.entity.Ressource;
+import com.example.microservice2.dto.UserDTO;
+import com.example.microservice2.entity.*;
+import com.example.microservice2.feign.UserClient;
 import com.example.microservice2.repository.CommandeRepo;
 import com.example.microservice2.repository.FournisseursRepo;
+import com.example.microservice2.repository.RessourceRepo;
 import com.example.microservice2.service.CommandeService;
 import com.example.microservice2.service.FournisseurService;
 import com.example.microservice2.service.RessourceService;
@@ -22,8 +22,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/commande")
@@ -35,8 +34,12 @@ public class RestApi {
     FournisseurService fournisseurService;
     @Autowired
     RessourceService ressourceService;
+    @Autowired
     FournisseursRepo fournisseursRepo;
+    @Autowired
     CommandeRepo commandeRepo;
+    @Autowired
+    RessourceRepo ressourceRepo;
 
 
 
@@ -144,7 +147,7 @@ public Commande Ajouter(@RequestBody Commande commande){
             file.transferTo(new File(filePath));
 
             // Retourner un objet JSON avec l'URL du fichier téléchargé
-            String fileUrl = "C:\\Users\\user\\Desktop\\imagee\\" + fileName; // URL du fichier
+            String fileUrl =  fileName; // URL du fichier
 
             return ResponseEntity.ok(new UploadResponse(fileUrl));
         } catch (IOException e) {
@@ -188,6 +191,105 @@ public Commande Ajouter(@RequestBody Commande commande){
         }
     }
 
+    @PutMapping("/ressources/{id}/updateStock")
+    public ResponseEntity<Ressource> updateStock(@PathVariable Long id, @RequestBody Map<String, Integer> request) {
+        Optional<Ressource> ressourceOpt =ressourceRepo.findById(id);
+        if (ressourceOpt.isPresent()) {
+            Ressource ressource = ressourceOpt.get();
+            ressource.setQuantiteDisponible(request.get("quantiteDisponible"));
+            ressourceRepo.save(ressource);
+            return ResponseEntity.ok(ressource);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @Autowired
+    private UserClient userClient;
+
+
+
+    @PostMapping("/loginUser")
+    public ResponseEntity<UserDTO> loginUser(@RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(userClient.login(userDTO));
+    }
+
+    @GetMapping("/meUser")
+    public ResponseEntity<UserDTO> getCurrentUser(@RequestHeader("Authorization") String token) {
+        UserDTO user = userClient.getCurrentUser(token);
+        return ResponseEntity.ok(user);
+    }
+    @PutMapping("/commandes/{id}/receptionner")
+    public ResponseEntity<?> receptionnerCommande(@PathVariable Long id) {
+        Optional<Commande> commandeOpt = commandeRepo.findById(id);
+
+        if (commandeOpt.isPresent()) {
+            Commande commande = commandeOpt.get();
+
+            // Récupérer la date actuelle (uniquement la date, sans l'heure)
+            Date now = new Date();
+            Date dateReception = removeTime(now); // Supprimer l'heure pour éviter les erreurs
+            commande.setDateReception(dateReception);
+
+            // Vérifier si la date de livraison prévue existe et comparer uniquement les jours
+            if (commande.getDateLivraisonPrevue() != null) {
+                Date dateLivraisonPrevue = removeTime(commande.getDateLivraisonPrevue()); // Supprimer l'heure
+
+                if (dateReception.after(dateLivraisonPrevue)) {
+                    commande.setEtatCommande(EtatCommande.EN_RETARD);
+                } else {
+                    commande.setEtatCommande(EtatCommande.RECUE);
+                }
+            } else {
+                commande.setEtatCommande(EtatCommande.RECUE);
+            }
+
+            commandeRepo.save(commande);
+            return ResponseEntity.ok("Commande reçue et état mis à jour");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Commande non trouvée");
+    }
+
+    // ✅ Fonction pour supprimer l'heure d'une date
+    private Date removeTime(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
+
+
+
+    @GetMapping("/commandes/en-retard")
+    public List<Commande> getCommandesEnRetard() {
+        // Sélectionner uniquement les commandes dont l'état est "EN_RETARD"
+        return commandeRepo.findByEtatCommande(EtatCommande.EN_RETARD);
+    }
+
+
+    @PutMapping("/commandes/verifier-et-mettre-a-jour")
+    public ResponseEntity<?> verifierEtMettreAJourEtatCommandes() {
+        List<Commande> commandes = commandeRepo.findAll();
+
+        for (Commande commande : commandes) {
+            if (commande.getDateReception() != null) {
+                if (commande.getDateLivraisonPrevue() != null
+                        && commande.getDateReception().after(commande.getDateLivraisonPrevue())) {
+                    // Si la date de réception dépasse la date de livraison prévue, la commande est en retard
+                    commande.setEtatCommande(EtatCommande.EN_RETARD);
+                } else {
+                    // Sinon, elle est reçue normalement
+                    commande.setEtatCommande(EtatCommande.RECUE);
+                }
+            }
+            commandeRepo.save(commande);
+        }
+
+        return ResponseEntity.ok("État des commandes mis à jour");
+    }
 
 
 }

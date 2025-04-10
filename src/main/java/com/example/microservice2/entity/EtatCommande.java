@@ -4,5 +4,6 @@ public enum EtatCommande {
     RECUE,
     EN_ATTENTE,
     EXPEDIEE,
-    EN_COURS  // Ajout de cette valeur si nécessaire
+    EN_COURS,
+    EN_RETARD// Ajout de cette valeur si nécessaire
 }

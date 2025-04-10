@@ -1,13 +1,16 @@
 package com.example.microservice2.service;
 
 import com.example.microservice2.entity.Commande;
+import com.example.microservice2.entity.EtatCommande;
 import com.example.microservice2.repository.CommandeRepo;
 import com.example.microservice2.repository.FournisseursRepo;
 import com.example.microservice2.repository.RessourceRepo;
 import jakarta.mail.MessagingException;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 
@@ -28,6 +31,7 @@ public class CommandeService  implements CommandeInter{
 
 
     public Commande Ajouter(Commande commande) {
+        commande.setEtatCommande(EtatCommande.EN_COURS);
         Commande nouvelleCommande = commandeRepo.save(commande);
 
         // 📧 Envoyer un email après la commande
@@ -65,4 +69,39 @@ else { throw new RuntimeException("Commande introuvable");}
      return commandeRepo.findAll();
 
 
-}}
+}
+    // ✅ Réceptionner une commande (mettre à jour la date de réception)
+    public void receptionnerCommande(Long idCommande) {
+        Optional<Commande> commandeOpt = commandeRepo.findById(idCommande);
+        if (commandeOpt.isPresent()) {
+            Commande commande = commandeOpt.get();
+            commande.setDateReception(new Date()); // Met la date actuelle
+            commande.setEtatCommande(EtatCommande.RECUE); // Marquer comme reçue
+            commandeRepo.save(commande);
+        } else {
+            throw new RuntimeException("Commande introuvable");
+        }
+    }
+
+    // ✅ Lister les commandes en retard
+    public List<Commande> getCommandesEnRetard() {
+        return commandeRepo.findAll().stream()
+                .filter(commande -> commande.getDateLivraisonPrevue() != null &&
+                        commande.getDateReception() == null &&
+                        new Date().after(commande.getDateLivraisonPrevue()))
+                .toList();
+    }
+
+    // ✅ Vérifier et mettre à jour l'état des commandes
+    public void verifierEtMettreAJourEtatCommandes() {
+        List<Commande> commandes = commandeRepo.findAll();
+        for (Commande commande : commandes) {
+            if (commande.getDateReception() != null) {
+                commande.setEtatCommande(EtatCommande.RECUE);
+            } else if (commande.getDateLivraisonPrevue() != null && new Date().after(commande.getDateLivraisonPrevue())) {
+                commande.setEtatCommande(EtatCommande.EN_RETARD);
+            }
+            commandeRepo.save(commande);
+        }
+    }
+}

@@ -27,4 +27,5 @@ public class Fournisseurs {
     @OneToMany(mappedBy = "fournisseur", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Ressource> ressources;
+
 }

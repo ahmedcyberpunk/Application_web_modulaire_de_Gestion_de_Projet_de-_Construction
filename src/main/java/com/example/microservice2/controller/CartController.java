@@ -36,14 +36,9 @@ public class CartController {
     }
 
     // Supprimer un produit du panier
-    @DeleteMapping("/remove/{cartId}/{ressourceId}")
-    public ResponseEntity<Cart> removeRessourceFromCart(@PathVariable Long cartId, @PathVariable Long ressourceId) {
-        try {
-            Cart updatedCart = cartService.removeRessourceFromCart(cartId, ressourceId);
-            return ResponseEntity.ok(updatedCart);  // Renvoi du panier mis à jour après suppression
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(404).body(null);  // Si le panier ou la ressource n'est pas trouvé
-        }
+    @DeleteMapping("/remove/{ressourceId}")
+    public void removeRessourceFromCart( @PathVariable Long ressourceId) {
+        cartService.removeRessourceFromCart(ressourceId);
     }
 
     // Obtenir un panier

@@ -8,7 +8,9 @@ import com.example.microservice2.repository.RessourceRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -57,28 +59,30 @@ public class CartService implements Cartinter {
     }
 
     // Supprimer un produit du panier
-    public Cart removeRessourceFromCart(Long cartId, Long ressourceId) {
-        Optional<Cart> cartOptional = cartRepo.findById(cartId);
-        Optional<Ressource> ressourceOptional = ressourceRepo.findById(ressourceId);
+    public void removeRessourceFromCart(Long ressourceId) {
+        // Trouver tous les paniers qui contiennent la ressource
+        List<Cart> cartsContainingRessource = cartRepo.findAll().stream()
+                .filter(cart -> cart.getCartRessources().stream()
+                        .anyMatch(cr -> cr.getRessource().getIdProduit().equals(ressourceId)))
+                .collect(Collectors.toList());
 
-        if (cartOptional.isPresent() && ressourceOptional.isPresent()) {
-            Cart cart = cartOptional.get();
-            Ressource ressource = ressourceOptional.get();
-
-            // Récupérer la CartRessource correspondante
+        // Pour chaque panier contenant cette ressource, supprimer la ressource
+        for (Cart cart : cartsContainingRessource) {
+            // Trouver la CartRessource associée à la ressource à supprimer
             CartRessource cartRessource = cart.getCartRessources().stream()
                     .filter(cr -> cr.getRessource().getIdProduit().equals(ressourceId))
                     .findFirst()
-                    .orElseThrow(() -> new RuntimeException("CartRessource not found"));
+                    .orElseThrow(() -> new RuntimeException("Ressource not found in the cart"));
 
             // Retirer la ressource du panier
-            cart.getCartRessources().remove(cartRessource);
-            cart.calculateTotalPrice(); // Calculer le prix total après suppression
-            cartRepo.save(cart); // Sauvegarder le panier mis à jour
-            return cart;
+            cart.removeRessource(cartRessource);  // Utilise la méthode existante removeRessource dans Cart
+
+            // Sauvegarder les changements dans le panier
+            cartRepo.save(cart);
         }
-        throw new RuntimeException("Cart or Ressource not found");
     }
+
+
 
     // Obtenir un panier par son ID
     public Cart getCart(Long id) {
