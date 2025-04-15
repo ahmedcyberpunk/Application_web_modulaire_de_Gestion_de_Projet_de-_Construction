@@ -215,7 +215,7 @@ public  class SMServiceImpl implements ISM {
                 .count();
         score -= failedInspections * 10;
 
-        // Deduct 0.5 points per overdue day
+        //// Deduct 0.5 points per overdue day
         Date nextMaintenance = equipment.getMaintenanceDate();
         if (nextMaintenance != null && new Date().after(nextMaintenance)) {
             long daysOverdue = (new Date().getTime() - nextMaintenance.getTime()) / (1000 * 60 * 60 * 24);
