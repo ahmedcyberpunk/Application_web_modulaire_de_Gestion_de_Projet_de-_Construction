@@ -1,0 +1,4 @@
+package tn.esprit.pi.repository;
+
+public interface SearchHistoryRepository {
+}

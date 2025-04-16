@@ -1,0 +1,223 @@
+package tn.esprit.pi.service;
+
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.stereotype.Service;
+import tn.esprit.pi.entity.Contrat_Terrain;
+import tn.esprit.pi.entity.Papier_autorisation;
+import tn.esprit.pi.entity.SearchHistory;
+import tn.esprit.pi.entity.Terrain;
+import tn.esprit.pi.repository.AutorisationRepo;
+import tn.esprit.pi.repository.ContratRepo;
+import tn.esprit.pi.repository.SearchHistoryRepository;
+import tn.esprit.pi.repository.TerrainRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.MailException;
+
+import java.io.File;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service
+@Slf4j
+@AllArgsConstructor
+public class ServiceMicro4 implements IServiceMicro4 {
+ TerrainRepo terrainRepo;
+ AutorisationRepo autorisationRepo;
+ ContratRepo contratRepo;
+ SearchHistoryRepository searchHistoryRepository;
+ private JavaMailSender emailSender;
+
+
+ public Terrain addTerrain(Terrain terrain){
+  return terrainRepo.save(terrain);
+ }
+ public Terrain  updateTerrain(Terrain terrain) {
+  Optional<Terrain> existingTerrainOpt = terrainRepo.findById(terrain.getIdTerrain());
+
+  if (existingTerrainOpt.isPresent()) {
+   Terrain existingTerrain = existingTerrainOpt.get();
+
+   // Update the existing terrain's fields
+   existingTerrain.setNom(terrain.getNom());
+   existingTerrain.setLocalisation(terrain.getLocalisation());
+   existingTerrain.setSuperficie(terrain.getSuperficie());
+   existingTerrain.setStatutJuridique(terrain.getStatutJuridique());
+   existingTerrain.setTypeSol(terrain.getTypeSol());
+   existingTerrain.setNotif(terrain.getNotif());
+   existingTerrain.setBan(terrain.getBan());
+
+
+   return terrainRepo.save(existingTerrain);
+
+
+  }
+
+  return null;
+
+
+ }
+
+
+
+ public List<Papier_autorisation> getPapierByTerrainId(Long terrainId) {
+  // Find terrain by ID
+  Terrain terrain = terrainRepo.findByIdTerrain(terrainId);
+
+
+  // Return list of papers associated with the found terrain
+  return terrain.getPapierAutorisationConstructions();
+ }
+
+ @Override
+ public Terrain findByIdTerrain(Long id) {
+  return terrainRepo.findByIdTerrain(id);
+ }
+
+ @Override
+ public Contrat_Terrain findContratByTerrainId(Long id) {
+  return contratRepo.findByTerrainIdTerrain(id);
+ }
+
+ @Override
+ public Contrat_Terrain findContratById(Integer id) {
+  return contratRepo.findById(id).orElse(null);
+ }
+
+ @Override
+ public List<Contrat_Terrain> findContratByNomProprietaire(String nom) {
+  return contratRepo.findByNomProprietaire(nom);
+ }
+
+ @Override
+ public Papier_autorisation addPapier(Papier_autorisation papier, Long id) {
+  Terrain terrain = terrainRepo.findByIdTerrain(id);
+  papier.setTerrain(terrain);
+
+  return autorisationRepo.save(papier);
+ }
+
+
+ public void deleteTerrain(Integer id){
+  terrainRepo.deleteById(id);
+ }
+
+ @Override
+ public List<Terrain> getAllTerrains() {
+  return terrainRepo.findAll();
+ }
+
+
+
+ @Override
+ public void updatePapier(Papier_autorisation papier,Long id) {
+  if (autorisationRepo.findById(papier.getId_Autorisation()).isPresent()) {
+
+   Terrain terrain = terrainRepo.findByIdTerrain(id);
+   papier.setTerrain(terrain);
+   autorisationRepo.save(papier);
+  } else {
+   throw new RuntimeException("Terrain not found");
+  }
+ }
+
+ @Override
+ public void deletePapier(Integer id) {
+  autorisationRepo.deleteById(id);
+ }
+
+ @Override
+ public List<Papier_autorisation> getAllPapier() {
+  return autorisationRepo.findAll();
+ }
+
+ @Override
+ public Contrat_Terrain addContrat(Contrat_Terrain contrat, Long id) {
+  Terrain terrain = terrainRepo.findByIdTerrain(id);
+  contrat.setTerrain(terrain);
+
+  return  contratRepo.save(contrat);
+ }
+ public List<Terrain> getAllTerrainsFromContracts() {
+  List<Contrat_Terrain> contrats = contratRepo.findAll(); // Récupère tous les contrats
+  return contrats.stream()
+          .map(Contrat_Terrain::getTerrain) // Extrait le terrain de chaque contrat
+          .distinct() // Supprime les doublons (si plusieurs contrats ont le même terrain)
+          .collect(Collectors.toList());
+ }
+
+
+ @Override
+ public void updateContrat(Contrat_Terrain contrat) {
+  // Find the existing contract by its ID
+  Optional<Contrat_Terrain> existingTerrainOpt = contratRepo.findById(contrat.getId_Contrat());
+
+  if (existingTerrainOpt.isPresent()) {
+   Contrat_Terrain existingTerrain = existingTerrainOpt.get();
+
+   // Update the existing contract's fields
+   existingTerrain.setNom_admin(contrat.getNom_admin());
+   existingTerrain.setNomProprietaire(contrat.getNomProprietaire());
+   existingTerrain.setPrenom_Proprietaire(contrat.getPrenom_Proprietaire());
+   existingTerrain.setDate_signature(contrat.getDate_signature());
+   existingTerrain.setType_contrat(contrat.getType_contrat());
+   existingTerrain.setStatut_Contrat(contrat.getStatut_Contrat());
+   existingTerrain.setSignatureImage(contrat.getSignatureImage());
+   existingTerrain.setImageterre(contrat.getImageterre());
+   existingTerrain.setSignatureClient(contrat.getSignatureClient());
+   existingTerrain.setTelephone(contrat.getTelephone());
+   existingTerrain.setIndice(contrat.getIndice());
+   // Save the updated contract back to the repository
+   contratRepo.save(existingTerrain);
+  } else {
+   // Handle the case where the contract doesn't exist
+   // You might want to throw an exception or log a message here
+   System.out.println("Contract not found for ID: " + contrat.getId_Contrat());
+  }
+ }
+
+ @Override
+ public void deleteContrat(Integer id) {
+contratRepo.deleteById(id);
+ }
+
+ @Override
+ public List<Contrat_Terrain> getAllContrats() {
+  return contratRepo.findAll();
+ }
+
+ @Override
+ public void saveSearchHistory(String username, String location) {
+  // Check if this user has already searched for this location
+  SearchHistory existingSearch = searchHistoryRepository
+          .findByUsernameAndLocation(username, location)
+          .orElse(new SearchHistory());
+
+  // Update the search history or create a new one
+  existingSearch.setUsername(username);
+  existingSearch.setLocation(location);
+  existingSearch.setSearchCount(existingSearch.getSearchCount() + 1);  // Increment search count
+  existingSearch.setLastSearched(LocalDateTime.now());
+
+  searchHistoryRepository.save(existingSearch);
+ }
+ @Override
+ public List<SearchHistory> getRecommendations(String username) {
+  return searchHistoryRepository.findByUsernameOrderBySearchCountDesc(username);
+ }
+
+
+}
