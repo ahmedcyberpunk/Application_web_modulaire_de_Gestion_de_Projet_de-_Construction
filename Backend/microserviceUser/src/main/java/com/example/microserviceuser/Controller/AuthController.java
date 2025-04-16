@@ -58,21 +58,35 @@ public class AuthController {
         System.out.println("Tentative de connexion pour l'utilisateur : " + user.getUsername());
 
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
         } catch (Exception e) {
             System.out.println("Échec de l'authentification : " + e.getMessage());
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         }
 
         String token = JwtUtils.generateToken(user.getUsername());
+
+        // ➕ Injecter dans le contexte Spring Security
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                user.getUsername(),
+                token, // credentials
+                null
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // Récupérer l'ID de l'utilisateur depuis la base de données ou le service utilisateur
+        Long userId = userService.getUserIdByUsername(user.getUsername());
+        String role = userService.getUserRoleByUsername(user.getUsername());
+
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername(user.getUsername());
         userDTO.setToken(token);
-        userDTO.setRole(user.getRole());
+        userDTO.setId(userId);
+        userDTO.setRole(role);
 
         return ResponseEntity.ok(userDTO);
     }
-
 
     @GetMapping("/me")
     public ResponseEntity<UserDetails> getCurrentUser() {

@@ -21,10 +21,27 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
+        System.out.println("Utilisateur connecté : ID = " + user.getId());
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())
                 .roles(user.getRole())
+
+
                 .build();
+    }
+    public Long getUserIdByUsername(String username) {
+        User user = userRepository.findByUsername(username);  // Récupérer l'utilisateur depuis la base de données
+        if (user != null) {
+            return user.getId();  // Retourner l'ID de l'utilisateur
+        }
+        return null;
+    }
+    public String getUserRoleByUsername(String username) {
+        User user = userRepository.findByUsername(username);  // Récupérer l'utilisateur depuis la base de données
+        if (user != null) {
+            return user.getRole();  // Retourner l'ID de l'utilisateur
+        }
+        return null;
     }
 }

@@ -2,6 +2,8 @@ package com.example.microserviceuser.Entity;
 
 public class UserDTO {
 
+
+    private Long id;
     private String token;
 
     private String role;
@@ -33,8 +35,13 @@ public class UserDTO {
     }
 
 
+    public Long getId() {
+        return id;
+    }
 
-
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getEmail() {
         return email;
