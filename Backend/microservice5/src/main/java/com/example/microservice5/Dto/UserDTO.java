@@ -1,13 +1,31 @@
-package com.example.microserviceuser.Entity;
+package com.example.microservice5.Dto;
+
+
 
 public class UserDTO {
-
     private String token;
 
+    private String password;
     private String role;
 
     private String username;
     private String email;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    private Long id;
+    public UserDTO() {}
+
+    public UserDTO(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
     public String getToken() {
         return token;
     }
@@ -33,7 +51,8 @@ public class UserDTO {
     }
 
 
-
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 
 
     public String getEmail() {
@@ -43,6 +62,5 @@ public class UserDTO {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
 }

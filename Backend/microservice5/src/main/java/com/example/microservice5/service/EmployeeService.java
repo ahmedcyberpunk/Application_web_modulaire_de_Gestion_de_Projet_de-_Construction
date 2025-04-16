@@ -1,11 +1,11 @@
 package com.example.microservice5.service;
 
 
+
+import com.example.microservice5.Dto.UserDTO;
+import com.example.microservice5.Feign.UserClient;
 import com.example.microservice5.entity.Employee;
-import com.example.microservice5.repository.AbsenceRepository;
-import com.example.microservice5.repository.EmployeeRepository;
-import com.example.microservice5.repository.PerformanceRepository;
-import com.example.microservice5.repository.SalaryRepository;
+import com.example.microservice5.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -23,6 +23,8 @@ public class EmployeeService  implements IEmployeeService {
     AbsenceRepository absenceRepository;
     EmployeeRepository employeeRepository;
     PerformanceRepository performanceRepository;
+    DemandeRepository demandeRepository;
+    private final UserClient userClient;
 
     @Scheduled(cron = "0 0 0 1 * ?")
     @Transactional
@@ -39,6 +41,7 @@ public class EmployeeService  implements IEmployeeService {
         return employeeRepository.findAll();
 
     }
+
 
     public Employee addEmployee(Employee employee) {
         return employeeRepository.save(employee);
@@ -150,4 +153,7 @@ public Map<String, List<Employee>> getEmployesDisponiblesParPoste() {
         return employees.stream()
                 .collect(Collectors.groupingBy(Employee::getPoste, Collectors.counting())); // Nombre total d'employés par poste
     }
+
+
+
 }

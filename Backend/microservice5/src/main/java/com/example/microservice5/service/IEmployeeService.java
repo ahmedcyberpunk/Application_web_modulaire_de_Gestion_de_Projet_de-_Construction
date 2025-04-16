@@ -10,7 +10,7 @@ public interface IEmployeeService {
 
     List<Employee> getAllEmployees();
 
-    Employee addEmployee(Employee employee);
+    //Employee addEmployee(Employee employee);
 
     void deleteEmployee(Long id);
 
