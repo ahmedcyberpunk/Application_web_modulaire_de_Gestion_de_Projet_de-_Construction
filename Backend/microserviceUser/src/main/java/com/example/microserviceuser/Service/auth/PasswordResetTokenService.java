@@ -24,4 +24,3 @@ public class PasswordResetTokenService {
     public void removeToken(String token) {
         tokens.remove(token);
     }
-}
