@@ -1,8 +1,7 @@
 package com.example.microservice2.controller;
 
-import com.example.microservice2.dto.UserDTO;
 import com.example.microservice2.entity.*;
-import com.example.microservice2.feign.UserClient;
+
 import com.example.microservice2.repository.CommandeRepo;
 import com.example.microservice2.repository.FournisseursRepo;
 import com.example.microservice2.repository.RessourceRepo;
@@ -10,10 +9,10 @@ import com.example.microservice2.service.CommandeService;
 import com.example.microservice2.service.FournisseurService;
 import com.example.microservice2.service.RessourceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -204,22 +203,10 @@ public Commande Ajouter(@RequestBody Commande commande){
         }
     }
 
-    @Autowired
-    private UserClient userClient;
 
 
 
-    @PostMapping("/loginUser")
-    public ResponseEntity<UserDTO> loginUser(@RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userClient.login(userDTO));
-    }
 
-    @GetMapping("/meUser")
-    public ResponseEntity<UserDTO> getCurrentUser(@RequestHeader("Authorization") String token) {
-        UserDTO user = userClient.getCurrentUser(token);
-        System.out.println("Utilisateur connecté : ID = " + user.getId());
-        return ResponseEntity.ok(user);
-    }
     @PutMapping("/commandes/{id}/receptionner")
     public ResponseEntity<?> receptionnerCommande(@PathVariable Long id) {
         Optional<Commande> commandeOpt = commandeRepo.findById(id);
@@ -291,7 +278,21 @@ public Commande Ajouter(@RequestBody Commande commande){
 
         return ResponseEntity.ok("État des commandes mis à jour");
     }
+    @GetMapping("/api/{id}/position")
+    public ResponseEntity<?> getCommandePosition(@PathVariable Long id) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("clientLat", 36.85);      // position fixe si client non enregistrée
+        data.put("clientLng", 10.3);
+        data.put("livreurLat", 36.81);     // simuler une progression
+        data.put("livreurLng", 10.2);
+        data.put("etat", "EN_ROUTE");
 
+        return ResponseEntity.ok(data);
+    }
 
+    @GetMapping("/{id}")
+    public Commande getCommande(@PathVariable Long id) {
+        return commandeRepo.findById(id).orElseThrow();
+    }
 }
 

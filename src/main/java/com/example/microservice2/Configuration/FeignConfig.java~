@@ -1,0 +1,12 @@
+package com.example.microservice2.Configuration;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+@FeignClient(name = "microserviceUser", url = "http://localhost:8088/auth", configuration = FeignConfig.class)
+public class FeignConfig {
+
+
+}

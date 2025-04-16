@@ -1,0 +1,21 @@
+package com.example.microservice2.Configuration;
+
+import feign.RequestInterceptor;
+import feign.RequestTemplate;
+import org.springframework.stereotype.Component;
+
+@Component
+public class FeignClientInterceptor implements RequestInterceptor {
+    private String authToken;
+
+    public void setAuthToken(String token) {
+        this.authToken = token;
+    }
+
+    @Override
+    public void apply(RequestTemplate template) {
+        if (authToken != null && !authToken.isEmpty()) {
+            template.header("Authorization", "Bearer " + authToken);
+        }
+    }
+}

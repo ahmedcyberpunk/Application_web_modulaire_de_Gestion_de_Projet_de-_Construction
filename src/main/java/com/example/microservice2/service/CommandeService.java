@@ -8,9 +8,7 @@ import com.example.microservice2.repository.RessourceRepo;
 import jakarta.mail.MessagingException;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 
@@ -104,4 +102,5 @@ else { throw new RuntimeException("Commande introuvable");}
             commandeRepo.save(commande);
         }
     }
+
 }

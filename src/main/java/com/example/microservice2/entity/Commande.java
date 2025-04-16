@@ -24,7 +24,13 @@ public class Commande {
 
     @Temporal(TemporalType.DATE)
     private Date dateCommande;
+    private String username;
+    public Long iduser;
 
+    private double clientLat;
+    private double clientLng;
+    private double livreurLat;
+    private double livreurLng;
     @Enumerated(EnumType.STRING)  // Stocke sous forme de texte
     @Column(name = "etat_commande", nullable = false, length = 20)
     private EtatCommande etatCommande;

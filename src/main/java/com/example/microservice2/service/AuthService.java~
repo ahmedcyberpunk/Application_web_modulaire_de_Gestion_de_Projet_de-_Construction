@@ -1,0 +1,37 @@
+package com.example.microservice2.service;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import com.example.microservice2.dto.UserDTO;
+import com.example.microservice2.feign.UserClient;
+@Service
+public class AuthService {
+    private final UserClient userClient;
+
+    public AuthService(UserClient userClient) {
+        this.userClient = userClient;
+    }
+
+    public UserDTO login(UserDTO userDTO) {
+        UserDTO response = userClient.login(userDTO);
+        // Stocker le token dans le contexte de sécurité
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(
+                        response.getUsername(),
+                        "Bearer " + response.getToken(),
+                        null);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return response;
+    }
+
+    public UserDTO getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication.getCredentials() == null) {
+            throw new IllegalStateException("No user logged in");
+        }
+        String token = (String) authentication.getCredentials();
+        return userClient.getCurrentUser(token);
+    }
+}
