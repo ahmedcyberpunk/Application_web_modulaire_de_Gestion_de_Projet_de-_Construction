@@ -29,19 +29,4 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 
                 .build();
-    }
-    public Long getUserIdByUsername(String username) {
-        User user = userRepository.findByUsername(username);  // Récupérer l'utilisateur depuis la base de données
-        if (user != null) {
-            return user.getId();  // Retourner l'ID de l'utilisateur
-        }
-        return null;
-    }
-    public String getUserRoleByUsername(String username) {
-        User user = userRepository.findByUsername(username);  // Récupérer l'utilisateur depuis la base de données
-        if (user != null) {
-            return user.getRole();  // Retourner l'ID de l'utilisateur
-        }
-        return null;
-    }
-}
+
