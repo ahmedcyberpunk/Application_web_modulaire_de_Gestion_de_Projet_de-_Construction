@@ -18,8 +18,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 
@@ -48,15 +46,6 @@ public class AuthController {
         this.mailService = mailService;// Injection correcte
     }
 
-    @ResponseBody
-    @PostMapping("/register")
-    public ResponseEntity<Map<String, String>> registerUser(@RequestBody User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-        Map<String, String> response = new HashMap<>();
-
-        response.put("message", "user registered successfully");
-        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")

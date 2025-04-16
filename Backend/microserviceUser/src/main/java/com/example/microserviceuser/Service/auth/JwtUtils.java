@@ -43,4 +43,3 @@ public class JwtUtils {
         String username = extractUsername(jwtToken);  // Récupère l'username du token
         return username.equals(userDetails.getUsername());  // Compare avec l'username du UserDetails
     }
-}
