@@ -89,7 +89,7 @@ public class RestControllerMicro1 {
         return service.getProjetById(id);
     }
 
-    @GetMapping("/listtasks/{id}")
+    @GetMapping("/listtasks{id}")
     public  List<Tache> getTachesByProjetId(@PathVariable Integer id){
         return service.getTachesByProjetId(id);
     }

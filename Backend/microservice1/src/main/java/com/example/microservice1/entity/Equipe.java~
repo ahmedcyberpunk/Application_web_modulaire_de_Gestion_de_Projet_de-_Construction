@@ -21,7 +21,6 @@ public class Equipe {
     private Integer idEquipe;
     private String chefEquipe;
 
-
     @OneToOne(mappedBy="equipe")
     @JsonIgnore
     private Projet projet;

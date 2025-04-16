@@ -1,10 +1,7 @@
 package com.example.microservice1.service;
 
 import com.example.microservice1.entity.*;
-import com.example.microservice1.repository.EquipeRepo;
-import com.example.microservice1.repository.ProjetRepo;
-import com.example.microservice1.repository.RapportRepo;
-import com.example.microservice1.repository.TacheRepo;
+import com.example.microservice1.repository.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -91,9 +88,72 @@ public class ServiceMicro1 implements IServiceMicro1{
     public Tache addTacheAndAffectToProject(Integer id, Tache tache) {
         Projet projet = projetRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Projet not found with ID: " + id));
+
+        // Verify new task starts after last task in the project
+        if (!isStartDateAfterLastTask(projet, tache.getDateDebutTache())) {
+            throw new RuntimeException("New task must start after the last task's end date.");
+        }
+
+        // Verify task is within project dates
+        if (!isTaskWithinProjectDates(projet, tache)) {
+            throw new RuntimeException("Task must be within the project's start and end dates.");
+        }
+
+        // Verify previous task status is completed
+        if (!isPreviousTaskCompleted(projet)) {
+            throw new RuntimeException("Previous task must be completed before adding the new task.");
+        }
+
         tache.setProjet(projet);
         return tacheRepo.save(tache);
     }
+
+    private boolean isStartDateAfterLastTask(Projet projet, LocalDate newStartDate) {
+        List<Tache> tasks = projet.getTaches();
+
+        if (tasks == null || tasks.isEmpty()) {
+            return true; // No existing tasks, so we're good
+        }
+
+        // Find the latest task by end date
+        Tache latestTask = tasks.stream()
+                .max(Comparator.comparing(Tache::getDateFinTache))
+                .orElse(null);
+
+        if (latestTask == null) return true;
+
+        return newStartDate.isAfter(latestTask.getDateFinTache());
+    }
+
+    private boolean isTaskWithinProjectDates(Projet projet, Tache tache) {
+        LocalDate projectStartDate = projet.getDateDebutProjet(); // LocalDate
+        LocalDate projectEndDate = projet.getDateFinProjet();     // LocalDate
+        LocalDate taskStartDate = tache.getDateDebutTache();      // LocalDate
+        LocalDate taskEndDate = tache.getDateFinTache();          // LocalDate
+
+        // Ensure task starts after project start and ends before project end
+        return !taskStartDate.isBefore(projectStartDate) && !taskEndDate.isAfter(projectEndDate);
+    }
+
+    private boolean isPreviousTaskCompleted(Projet projet) {
+        List<Tache> tasks = projet.getTaches();
+
+        if (tasks == null || tasks.isEmpty()) {
+            return true; // No tasks, no status to check, can add new task
+        }
+
+        // Find the latest task by end date
+        Tache latestTask = tasks.stream()
+                .max(Comparator.comparing(Tache::getDateFinTache))
+                .orElse(null);
+
+        if (latestTask == null) return true;
+
+        // Check if the previous task's status is COMPLETED
+        return Projet.Statut.COMPLETED.equals(latestTask.getStatut());
+    }
+
+
 
     public List<Tache> findAllTache(){
         return tacheRepo.findAll();
@@ -207,9 +267,9 @@ public class ServiceMicro1 implements IServiceMicro1{
         int totalProgress = taches.stream().mapToInt(Tache::getProgresTache).sum();
         int averageProgress = totalProgress / taches.size();
 
-        long completedTasks = taches.stream().filter(t -> t.getProgresTache() == 100).count();
-        long inProgressTasks = taches.stream().filter(t -> t.getProgresTache() > 0 && t.getProgresTache() < 100).count();
-        long pendingTasks = taches.stream().filter(t -> t.getProgresTache() == 0).count();
+        long completedTasks = taches.stream().filter(t -> t.getStatut() == Projet.Statut.COMPLETED).count();
+        long inProgressTasks = taches.stream().filter(t -> t.getStatut() == Projet.Statut.INPROGRESS).count();
+        long pendingTasks = taches.stream().filter(t -> t.getStatut() == Projet.Statut.PENDING).count();
 
         // Calculate construction KPIs
         kpis.add(new KPI("Projet", projet.getNomProjet()));
@@ -237,6 +297,25 @@ public class ServiceMicro1 implements IServiceMicro1{
         // Example: you could fetch the actual expenses related to the project from another service or database
         return 500000;  // For example purposes, assume $500,000 is spent.
     }
+
+
+
+    @Scheduled(fixedRate = 30000) // every 30 seconds
+    public void schedule() {
+        List<Projet> projets = projetRepo.findAll();
+
+        for (Projet projet : projets) {
+            if (projet.getStatut() != Projet.Statut.COMPLETED) {
+                LocalDate now = LocalDate.now();
+                LocalDate dateFin = projet.getDateFinProjet();
+
+                if (!now.isAfter(dateFin) && now.plusDays(30).isAfter(dateFin)) {
+                    System.out.println("🛎️ Le projet \"" + projet.getNomProjet() + "\" est dans son dernier mois !");
+                }
+            }
+        }
+    }
+
 
 
 
