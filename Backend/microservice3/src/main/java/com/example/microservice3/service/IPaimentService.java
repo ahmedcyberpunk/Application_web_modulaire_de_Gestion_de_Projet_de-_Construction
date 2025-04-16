@@ -6,7 +6,7 @@ import java.util.List;
 public interface IPaimentService {
     public List<Paiement> getAllModesPaiement();
     Paiement getModePaiement(Integer id);
-    Paiement addModePaiement(Paiement modePaiement);
+    Paiement addModePaiement(Paiement modePaiement,int nbre);
 
     void deleteModePaiement(Integer id);
     Paiement updatePaiement(Integer id, Paiement paiement);

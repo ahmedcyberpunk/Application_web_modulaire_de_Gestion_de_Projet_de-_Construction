@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -103,7 +104,7 @@ public class FactureService implements IFactureService {
         List<Echeance> echeances = facture.getEcheances();
         for (Echeance echeance : echeances) {
             if (echeance.getStatut() == StatutEcheance.EN_ATTENTE) { // Assuming IN_PROGRESS is the in-progress status
-                total = total.add(echeance.getMontantDu());
+                total = total.add(echeance.getMontantDu()); //decrease the total
             }
         }
 
@@ -118,6 +119,11 @@ public class FactureService implements IFactureService {
         // Return the message
         return "Your remaining total to pay is " + totalToPay + " EUR";
     }
+    @Override
+    public List<Map<String, Object>> getMontantParMois() {
+        return factureRepository.findMontantParMois();  // Appel à la méthode du repository
+    }
+
 
 
 

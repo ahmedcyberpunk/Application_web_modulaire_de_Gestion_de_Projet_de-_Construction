@@ -18,10 +18,10 @@ public class PaimentController {
     private final PaiementService modePaiementService;
 
     // Endpoint to add a paiement
-    @PostMapping("/addpaiement/{nbr}")
-    public ResponseEntity<Paiement> addModePaiement(@RequestBody Paiement modePaiement,@PathVariable("nbr") Integer nbr) {
+    @PostMapping("/addpaiement")
+    public ResponseEntity<Paiement> addModePaiement(@RequestBody Paiement modePaiement) {
         // Call the service layer to add a paiement
-        Paiement addedModePaiement = modePaiementService.addModePaiement(modePaiement,nbr);
+        Paiement addedModePaiement = modePaiementService.addModePaiement(modePaiement);
         return ResponseEntity.ok(addedModePaiement);  // Return the added paiement as the response
     }
 

@@ -13,4 +13,5 @@ public interface FactureRepository extends JpaRepository<Facture,Long> {
     @Query("SELECT NEW map(FUNCTION('DATE_FORMAT', f.dateEmission, '%Y-%m') AS mois, SUM(f.montantTotal) AS montantTotal) " +
             "FROM Facture f GROUP BY mois ORDER BY mois DESC")
     List<Map<String, Object>> findMontantParMois();
+
 }

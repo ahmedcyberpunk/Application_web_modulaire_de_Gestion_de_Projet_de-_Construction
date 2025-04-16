@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/facture")
@@ -59,6 +60,10 @@ public class FactureController {
     @GetMapping("/{factureId}/remainingMessage")
     public String getRemainingMessage(@PathVariable Long factureId) {
         return factureService.getMessageForRemainingAmount(factureId);
+    }
+    @GetMapping("/montant-par-mois")
+    public List<Map<String, Object>> getMontantParMois() {
+        return factureService.getMontantParMois();  // Appel de la méthode du service
     }
 }
 

@@ -4,6 +4,7 @@ import com.example.microservice3.entity.Facture;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public interface IFactureService {
     Facture getFacture(Long id);
@@ -15,4 +16,5 @@ public interface IFactureService {
  //   BigDecimal calculerMontantRestant(Long factureId);
  BigDecimal calculateTotalAmountToPay(Long factureId);
     String getMessageForRemainingAmount(Long factureId);
+    List<Map<String, Object>> getMontantParMois();
 }

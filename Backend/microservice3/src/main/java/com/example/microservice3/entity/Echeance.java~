@@ -29,11 +29,12 @@ public class Echeance {
 
     // Plusieurs échéances sont liées à une seule facture
     @ManyToOne
+
     @JoinColumn(name = "facture_id")
     private Facture facture;
 
     // Une échéance peut être payée par un seul paiement
     @ManyToOne
     @JsonIgnore
-    private Paiement paiement; // This defines the "paiement" side of the relationship
+    private Paiement paiement;
 }
