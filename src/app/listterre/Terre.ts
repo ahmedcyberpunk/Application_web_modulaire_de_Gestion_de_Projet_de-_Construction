@@ -7,5 +7,7 @@ superficie!:number;
 statutJuridique!:string;
 typeSol!:string;
 imagePath!:string;
+notif!:number;
+ban!:number;
 
 }

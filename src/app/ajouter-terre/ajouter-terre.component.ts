@@ -28,26 +28,28 @@ constructor(private terreservice:TerreService,private router:Router,private http
     nom: new FormControl('', [
       Validators.required, 
       Validators.minLength(3),
-      Validators.pattern('^[A-Za-zÀ-ÿ]+$') // Accepte uniquement les lettres et caractères accentués
+      Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$') // Accepte uniquement les lettres et caractères accentués
     ]),
     
     localisation: new FormControl('', [
       Validators.required, 
-      Validators.pattern('^[A-Za-zÀ-ÿ\s]+$') // Accepte uniquement des lettres et des espaces
+      Validators.pattern('^[A-Za-zÀ-ÿ\\s]+$')  // Accepte uniquement des lettres et des espaces
     ]),
     
     superficie: new FormControl('', [
       Validators.required, 
       Validators.min(50),      // La superficie ne peut pas être inférieure à 50
-      Validators.max(3000)     // La superficie ne peut pas être supérieure à 3000
+      Validators.max(3000)     // La superfi cie ne peut pas être supérieure à 3000
     ]),
-    statutJuridique: new FormControl('', [Validators.required]),
+    statutJuridique: new FormControl('Autorisé', [Validators.required]),
+
     imagePath: new FormControl('', [Validators.required]),
     typeSol: new FormControl(this.typeSolOptions[0], [Validators.required]),
   });
 }
 
 saveTerre(){
+  this.terrainForm.value.ban=0;
   this.terreservice.createTerre(this.terrainForm.value).subscribe(data=>{
     console.log(data);
     this.goToTerreList();
@@ -59,10 +61,18 @@ goToTerreList(){
   this.router.navigate(['/listterre']);
 
 }
+onSubmit() {
+  console.log(this.terrainForm.value);  // Log the terrain data to check what's being submitted
 
-onSubmit(){
-  console.log(this.Terrain);
-  this.saveTerre();
+  // Ask for confirmation before proceeding
+  const isConfirmed = window.confirm('Are you sure you want to save this terrain?');
+
+  if (isConfirmed) {
+    console.log('User confirmed submission');  // Confirmation log
+    this.saveTerre();  // Call the saveTerre function if confirmed
+  } else {
+    console.log('Form submission canceled');  // If canceled, log it
+  }
 }
 
 
@@ -83,7 +93,7 @@ onFileSelected(event: any) {
         if (response && response.imageUrl) {
           // Assuming the server responds with the image URL after upload
           this.terrainForm.value.imagePath = `http://localhost:8085${response.imageUrl}`;
-          console.log('Image URL saved: ', this.Terrain.imagePath);
+          console.log('Image URL saved: ', this.terrainForm.value.imagePath);
 
           // Optionally update the form control with the image URL
           this.terrainForm.patchValue({

@@ -265,83 +265,24 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link " data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" [routerLink]="'/ajouter-terre'">
+          <i class="bi bi-journal-text"></i><span>Ajouter Terre</span>
         </a>
-        <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>Alerts</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Accordion</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-badges.html">
-              <i class="bi bi-circle"></i><span>Badges</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-breadcrumbs.html">
-              <i class="bi bi-circle"></i><span>Breadcrumbs</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-buttons.html">
-              <i class="bi bi-circle"></i><span>Buttons</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-cards.html">
-              <i class="bi bi-circle"></i><span>Cards</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-carousel.html">
-              <i class="bi bi-circle"></i><span>Carousel</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-list-group.html">
-              <i class="bi bi-circle"></i><span>List group</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-modal.html" class="active">
-              <i class="bi bi-circle"></i><span>Modal</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-tabs.html">
-              <i class="bi bi-circle"></i><span>Tabs</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-pagination.html">
-              <i class="bi bi-circle"></i><span>Pagination</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-progress.html">
-              <i class="bi bi-circle"></i><span>Progress</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-spinners.html">
-              <i class="bi bi-circle"></i><span>Spinners</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-tooltips.html">
-              <i class="bi bi-circle"></i><span>Tooltips</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Components Nav -->
+      </li><!-- End Forms Nav -->
+      
 
+      <li class="nav-item">
+        <a class="nav-link active" [routerLink]="['/listterre']">
+          <i class="bi bi-layout-text-window-reverse"></i><span>List Terre</span>
+        </a>
+      </li><!-- End Tables Nav -->
+   
+
+      <li class="nav-item">
+        <a class="nav-link active" [routerLink]="['/calendar']">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Calendrier Contrats</span>
+        </a>
+      </li><!-- End Tables Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -519,48 +460,142 @@
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="addCardModalLabel" style="text-align: left;">Add Card</h5>
+                    <h5 class="modal-title" id="addCardModalLabel" style="text-align: left;">ajouter papier d'autorisation</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
                     <form (ngSubmit)="onFormSubmit()" [formGroup]="PapierForm">
-                        <div class="mb-3">
-                          <label for="type_Autorisation" class="form-label" style="text-align: left; display: block;">Type Autorisation</label>
-                          <input type="text" class="form-control" id="type_Autorisation" formControlName="type_Autorisation">
+                      <div class="mb-3">
+                        <label for="type_Autorisation" class="form-label" style="text-align: left; display: block;">Type Autorisation</label>
+                        <input type="text" class="form-control" id="type_Autorisation" formControlName="type_Autorisation">
+                        
+                        <!-- Error Messages -->
+                        <div *ngIf="PapierForm.get('type_Autorisation')?.invalid && (PapierForm.get('type_Autorisation')?.touched || PapierForm.get('type_Autorisation')?.dirty)" class="text-danger">
+                          <small *ngIf="PapierForm.get('type_Autorisation')?.errors?.['required']">Ce champ est obligatoire.</small>
+                          <small *ngIf="PapierForm.get('type_Autorisation')?.errors?.['minlength']">Le type d'autorisation doit contenir au moins 3 caractères.</small>
+                          <small *ngIf="PapierForm.get('type_Autorisation')?.errors?.['pattern']">il faut que des lettres</small>
                         </div>
-                        <div class="mb-3">
-                          <label for="statut" class="form-label" style="text-align: left; display: block;">Statut</label>
-                          <input type="text" class="form-control" id="statut" formControlName="statut">
+                      </div>
+                    
+                      <div class="mb-3">
+                        <label for="statut" class="form-label" style="text-align: left; display: block;">Statut</label>
+                        <select class="form-control" id="statut" formControlName="statut">
+                          <option value="pas_valide" selected>Pas valide</option>
+                          <option value="valide">Valide</option>
+                        </select>
+                    
+                        <!-- Error Messages -->
+                        <div *ngIf="PapierForm.get('statut')?.invalid && (PapierForm.get('statut')?.touched || PapierForm.get('statut')?.dirty)" class="text-danger">
+                          <small *ngIf="PapierForm.get('statut')?.errors?.['required']">Ce champ est obligatoire.</small>
                         </div>
-                        <div class="mb-3">
-                          <label for="description" class="form-label" style="text-align: left; display: block;">Description</label>
-                          <textarea class="form-control" id="description" formControlName="description"></textarea>
+                      </div>
+                    
+                      <div class="mb-3">
+                        <label for="description" class="form-label" style="text-align: left; display: block;">Description</label>
+                        <textarea class="form-control" id="description" formControlName="description"></textarea>
+                    
+                        <!-- Error Messages -->
+                        <div *ngIf="PapierForm.get('description')?.invalid && (PapierForm.get('description')?.touched || PapierForm.get('description')?.dirty)" class="text-danger">
+                          <small *ngIf="PapierForm.get('description')?.errors?.['required']">La description est obligatoire.</small>
+                          <small *ngIf="PapierForm.get('description')?.errors?.['minlength']">La description doit contenir au moins 3 caractères.</small>
+                          <small *ngIf="PapierForm.get('description')?.errors?.['pattern']">il faut que des lettres</small>
                         </div>
-                        <button type="submit" class="btn btn-primary" [disabled]="PapierForm.invalid">Add Card</button>
-                      </form>
+                      </div>
+                    
+                      <button type="submit" class="btn btn-primary" [disabled]="PapierForm.invalid">Ajouter papier</button>
+                  
+                    </form>
+                    
                       
                   </div>
                 </div>
               </div>
             </div>
+
+          <!-- Update Modal -->
+          <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModal" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="updateModalLabel">Modifier les informations</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <!-- Field for Type Autorisation -->
+                    <div class="mb-3">
+                      <label for="inputTypeAutorisation" class="form-label fw-bold fs-5">Type Autorisation</label>
+                      <textarea class="form-control" id="inputTypeAutorisation" [(ngModel)]="papier.type_Autorisation" name="type_Autorisation" rows="3"></textarea>
+                    </div>
+          
+                    <!-- Field for Statut -->
+                    <div class="mb-3">
+                      <label for="inputStatut" class="form-label fw-bold fs-5">Statut</label>
+                      <select class="form-control" id="inputStatut" [(ngModel)]="papier.statut" name="statut">
+                        <option value="valide">valide</option>
+                        <option value="pas_valide">Pas valide</option>
+                      </select>
+                    </div>
+          
+                    <!-- Field for Description -->
+                    <div class="mb-3">
+                      <label for="inputDescription" class="form-label fw-bold fs-5">Description</label>
+                      <textarea class="form-control" id="inputDescription" [(ngModel)]="papier.description" name="description" rows="3"></textarea>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-info text-white" (click)="updateData()">Sauvegarder</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          
             
             <!-- Display Added Cards -->
             <div *ngIf="cards.length > 0" class="mt-4" style="display: flex; flex-wrap: wrap; gap: 10px;">
-              <div *ngFor="let card of cards" class="card mb-3"
-                style="width: 48%; background-color: white; padding: 15px; font-family: 'Poppins', sans-serif;">
+              <div *ngFor="let card of cards; let i = index" class="card mb-3"
+                   style="width: 48%; background-color: white; padding: 15px; font-family: 'Poppins', sans-serif; position: relative;">
+              
+                <!-- Notification Bubble (Only shown if there is a notification) -->
+                <span *ngIf="card.notif > 0" class="badge bg-danger badge-number position-absolute top-0 start-100 translate-middle rounded-circle">
+                  {{ card.notif }}
+                </span>
+              
                 <div class="card-body" style="text-align: left;">
-                  <h4 style="font-size: 22px; font-weight: bold;">Type Autorisation: {{ card.Type_Autorisation }}</h4>
+                  <h4 style="font-size: 22px; font-weight: bold;">Type Autorisation: {{ card.type_Autorisation }}</h4>
                   <hr>
                   <p style="font-size: 18px;">
                     <strong>Essential Information:</strong> Statut {{ card.statut }} | Description {{ card.description }}
                   </p>
-                  <button class="btn btn-primary" style="margin-top: 10px;">Action</button>
+                  
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                    <!-- Validation Text -->
+                    <span style="font-size: 20px; font-weight: bold; margin-left: 490px;">Validation:</span>
+                    
+                    <!-- Slider Switch -->
+                    <label class="switch" style="position: relative;">
+                      <input type="checkbox" (change)="onToggleStatut($event, card)" [checked]="card.statut === 'valide'">
+                      <span class="slider round">
+                        <span class="left-icon">❌</span>
+                        <span class="right-icon">✔</span>
+                      </span>
+                    </label>
+                  </div>
+              
+                  <!-- Delete Button -->
+                  <button class="btn btn-primary" style="margin-top: 10px; margin-right: 10px;" (click)="confirmDelete(card.id_Autorisation)">Delete Paper</button>
+                  <button class="btn btn-primary" style="margin-top: 10px;" (click)="openModal(card)">Update Paper</button>
+            
+                  <!-- Checked Button -->
+                  <button class="btn btn-success" style="margin-top: 10px;" (click)="resetNotification(card)">Checked</button>
                 </div>
               </div>
             </div>
-            
           </div>
         </div>
+                               
       </section>
       
       

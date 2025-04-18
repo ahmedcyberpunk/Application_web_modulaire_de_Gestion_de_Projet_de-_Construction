@@ -185,17 +185,31 @@
           </ul><!-- End Messages Dropdown Items -->
 
         </li><!-- End Messages Nav -->
-
+  
+        
         <li class="nav-item dropdown pe-3">
 
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+          <a class="nav-link nav-profile d-flex align-items-center pe-3" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
-          </a><!-- End Profile Iamge Icon -->
-
+            <span class="d-none d-md-block dropdown-toggle ps-3">
+              admin
+              <!-- Larger Logout Icon -->
+              <a [routerLink]="['/utilisateur']" style="cursor: pointer;">
+                <i class="bi bi-box-arrow-right ms-2 fs-4"></i>
+              </a>
+              
+            </span>
+          </a>
+          <!-- End Profile Image Icon -->
+          
+          <!-- Dropdown Menu -->
+         
+          <!-- End Dropdown Menu -->
+          
+        
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
+              <h6>admin</h6>
               <span>Web Designer</span>
             </li>
             <li>
@@ -250,211 +264,7 @@
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
 
-    <ul class="sidebar-nav" id="sidebar-nav">
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="index.html">
-          <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>Alerts</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Accordion</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-badges.html">
-              <i class="bi bi-circle"></i><span>Badges</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-breadcrumbs.html">
-              <i class="bi bi-circle"></i><span>Breadcrumbs</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-buttons.html">
-              <i class="bi bi-circle"></i><span>Buttons</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-cards.html">
-              <i class="bi bi-circle"></i><span>Cards</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-carousel.html">
-              <i class="bi bi-circle"></i><span>Carousel</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-list-group.html">
-              <i class="bi bi-circle"></i><span>List group</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-modal.html">
-              <i class="bi bi-circle"></i><span>Modal</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-tabs.html">
-              <i class="bi bi-circle"></i><span>Tabs</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-pagination.html">
-              <i class="bi bi-circle"></i><span>Pagination</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-progress.html">
-              <i class="bi bi-circle"></i><span>Progress</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-spinners.html">
-              <i class="bi bi-circle"></i><span>Spinners</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-tooltips.html">
-              <i class="bi bi-circle"></i><span>Tooltips</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Components Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" [routerLink]="'/ajouter-terre'">
-          <i class="bi bi-journal-text"></i><span>Ajouter Terre</span>
-        </a>
-      </li><!-- End Forms Nav -->
-      
-
-      <li class="nav-item">
-        <a class="nav-link active" [routerLink]="['/listterre']">
-          <i class="bi bi-layout-text-window-reverse"></i><span>List Terre</span>
-        </a>
-      </li><!-- End Tables Nav -->
-      <li class="nav-item">
-        <a class="nav-link active" [routerLink]="['/de']">
-          <i class="bi bi-layout-text-window-reverse"></i><span>List Terre</span>
-        </a>
-      </li><!-- End Tables Nav -->
-      
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="charts-chartjs.html">
-              <i class="bi bi-circle"></i><span>Chart.js</span>
-            </a>
-          </li>
-          <li>
-            <a href="charts-apexcharts.html">
-              <i class="bi bi-circle"></i><span>ApexCharts</span>
-            </a>
-          </li>
-          <li>
-            <a href="charts-echarts.html">
-              <i class="bi bi-circle"></i><span>ECharts</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Charts Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="icons-bootstrap.html">
-              <i class="bi bi-circle"></i><span>Bootstrap Icons</span>
-            </a>
-          </li>
-          <li>
-            <a href="icons-remix.html">
-              <i class="bi bi-circle"></i><span>Remix Icons</span>
-            </a>
-          </li>
-          <li>
-            <a href="icons-boxicons.html">
-              <i class="bi bi-circle"></i><span>Boxicons</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Icons Nav -->
-
-      <li class="nav-heading">Pages</li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
-          <i class="bi bi-person"></i>
-          <span>Profile</span>
-        </a>
-      </li><!-- End Profile Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-faq.html">
-          <i class="bi bi-question-circle"></i>
-          <span>F.A.Q</span>
-        </a>
-      </li><!-- End F.A.Q Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-contact.html">
-          <i class="bi bi-envelope"></i>
-          <span>Contact</span>
-        </a>
-      </li><!-- End Contact Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-register.html">
-          <i class="bi bi-card-list"></i>
-          <span>Register</span>
-        </a>
-      </li><!-- End Register Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-login.html">
-          <i class="bi bi-box-arrow-in-right"></i>
-          <span>Login</span>
-        </a>
-      </li><!-- End Login Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-error-404.html">
-          <i class="bi bi-dash-circle"></i>
-          <span>Error 404</span>
-        </a>
-      </li><!-- End Error 404 Page Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-blank.html">
-          <i class="bi bi-file-earmark"></i>
-          <span>Blank</span>
-        </a>
-      </li><!-- End Blank Page Nav -->
-
-    </ul>
-
+   <app-sidebar></app-sidebar>
   </aside><!-- End Sidebar-->
 
   <main id="main" class="main">
@@ -495,8 +305,120 @@
         </div>
       </div>
       <button class="btn btn-success mb-3" (click)="generatePDF()">Télécharger PDF</button>
-      
-      
+      <!-- Bouton pour ouvrir la modale -->
+<button class="btn btn-success mb-3" style="margin-left: 20px;" (click)="openModal2()">Liste des contrats</button>
+
+<!-- Modale Bootstrap -->
+<div class="modal fade" id="contratModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content border-0" style="border-radius: 15px; overflow: hidden;">
+      <div class="modal-header text-white" style="background: linear-gradient(135deg, #4c55d2 0%, #764ba2 100%);">
+        <h5 class="modal-title fw-bold">📃 Liste des Contrats</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4" style="background-color: #f8f9fa;">
+        <div class="row row-cols-1 row-cols-md-2 g-4 contrat-container">
+          <div *ngFor="let contrat of contrats" class="col">
+            <div class="card h-100 border-0 shadow-sm" style="border-radius: 12px; overflow: hidden;">
+              <div class="card-img-top" style="height: 120px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); display: flex; align-items: center; justify-content: center;">
+                <h6 class="card-title fw-bold text-center" style="color: #e75cbb;  font-size: large;  ">Contrat {{ contrat.type_contrat }}</h6>
+              </div>
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                  <span class="badge rounded-pill" style="background-color: #6c5ce7; font-size: 0.8rem;">ID: {{ contrat.id_Contrat }}</span>
+                  <span class="badge rounded-pill" 
+                   >
+                    {{ contrat.statut_Contrat }}
+                  </span>
+                </div>
+                
+                <div class="contrat-info">
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="icon-circle me-3" style="background-color: rgba(108, 92, 231, 0.1);">
+                      <i class="bi bi-person-fill" style="color: #6c5ce7;"></i>
+                    </div>
+                    <div>
+                      <small class="text-muted">Administrateur</small>
+                      <h6 class="mb-0">{{ contrat.nom_admin }}</h6>
+                    </div>
+                  </div>
+                  
+                  <div class="d-flex align-items-center mb-2">
+                    <div class="icon-circle me-3" style="background-color: rgba(255, 118, 117, 0.1);">
+                      <i class="bi bi-house-fill" style="color: #ff7675;"></i>
+                    </div>
+                    <div>
+                      <small class="text-muted">Propriétaire</small>
+                      <h6 class="mb-0">{{ contrat.nomProprietaire }}</h6>
+                    </div>
+                  </div>
+                  
+                  <div class="d-flex align-items-center">
+                    <div class="icon-circle me-3" style="background-color: rgba(85, 239, 196, 0.1);">
+                      <i class="bi bi-file-earmark-text-fill" style="color: #55efc4;"></i>
+                    </div>
+                    <div>
+                      <small class="text-muted">Type de contrat</small>
+                      <h6 class="mb-0 text-capitalize">{{ contrat.type_contrat }}</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer bg-transparent border-0 d-flex justify-content-end">
+                <button class="btn btn-sm" style="background-color: #6c5ce7; color: white;">Voir détails</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer bg-white">
+        <button type="button" class="btn btn-outline-secondary rounded-pill" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+      <style>
+
+.contrat-card {
+  transition: all 0.3s ease;
+  background-color: #f8f9fa;
+}
+
+.contrat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  background-color: white;
+}
+
+.info-item {
+  margin-bottom: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.contrat-container {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* Style pour la scrollbar */
+.contrat-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.contrat-container::-webkit-scrollbar-thumb {
+  background-color: #adb5bd;
+  border-radius: 10px;
+}
+      </style>
+   
       
       <div class="row">
         <div class="col-lg-12">
@@ -507,38 +429,71 @@
               <p>Add lightweight datatables to your project with using the <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable. Check for <a href="https://fiduswriter.github.io/simple-datatables/demos/" target="_blank">more examples</a>.</p>
 
               <!-- Table with stripped rows -->
-              <table  id="terrainTable" class="table datatable">
+              <table id="terrainTable" class="table datatable">
                 <thead>
                   <tr>
-                    <th>
-                      <b>Nom</b>
-                    </th>
+                    <th><b>Type_Terrain</b></th>
                     <th>Localisation</th>
                     <th>Superficie</th>
-                    <th >StatutJuridique</th>
-                    <th >TypeSol</th>
-                    <th >Image</th>
-                   
+                    <th>StatutJuridique</th>
+                    <th>TypeSol</th>
+                    <th>Image</th>
+                    <th>Options</th>
+                    <th>Contrat</th>
+                    <th>checked</th>
                   </tr>
                 </thead>
                 <tbody>
-                 <tr *ngFor="let terre of filterTerres()">
-                   <td>{{terre.nom}}</td>
-                   <td>{{terre.localisation}}</td>
-                   <td>{{terre.superficie}}</td>
-                   <td>{{terre.statutJuridique}}</td>
-                   <td> {{terre.typeSol}}</td>
-                   <td><img [src]="terre.imagePath" alt="Image de {{ terre.nom }}" width="300" /></td>
-                   <td><button class="btn btn-danger" (click)="deleteTerre(terre.idTerrain)">Delete</button>
-                    <button class="btn btn-success" routerLink="/ajouter-terre" >Add</button>
-                    <button class="btn btn-primary" (click)="openModal(terre)">Update</button>
-                    <button class="btn"  style="background-color: orange; color: white;"  [routerLink]="['/detailsterre/',terre.idTerrain]">Details</button>
-                  </td>
-                  
-                   
-                 </tr>
+                  <tr *ngFor="let terre of filterTerres()">
+                    <td>{{ terre.nom }}</td>
+                    <td>{{ terre.localisation }}</td>
+                    <td>{{ terre.superficie }}</td>
+                    <td>{{ terre.statutJuridique }}</td>
+                    <td>{{ terre.typeSol }}</td>
+                    
+                    <!-- Gestion de l'image -->
+                    <td class="position-relative">
+                      <img *ngIf="terre.imagePath" [src]="terre.imagePath" alt="Image de {{ terre.nom }}" width="300" />
+                      <span *ngIf="terre.notif && terre.notif > 0" class="badge bg-danger badge-number position-absolute" style="top: 0; right: 20px;">
+                        {{ terre.notif }}
+                      </span>
+                    </td>
+                
+                    <!-- Boutons actions -->
+                    <td>
+                      <button class="btn btn-danger" (click)="confirmDelete(terre.idTerrain)">Delete</button>
+                      <button class="btn btn-primary" (click)="openModal(terre)">Update</button>
+                      <button class="btn" style="background-color: green; color: white;" [routerLink]="['/detailsterre/', terre.idTerrain]">Details</button>
+                    </td>
+                
+                    <!-- Bouton pour valider le terrain -->
+                    <td>
+                      <button class="btn"
+                        [ngStyle]="{
+                          'background-color': validationStatus[terre.idTerrain] === 'signed' ? 'red' : 
+                                              (validationStatus[terre.idTerrain] === 'available' ? 'green' : 'darkorange'),
+                          'color': 'white'
+                        }"
+                        (click)="handleButtonClick(terre.idTerrain)">
+                        {{ validationStatus[terre.idTerrain] === 'signed' ? 'Sign' : 
+                           (validationStatus[terre.idTerrain] === 'available' ? 'Available' : 'Pending') }}
+                      </button>
+                    </td>
+                
+                    <!-- Notification : Marquer comme lu -->
+                    <td>
+                      <button class="btn btn-info" (click)="resetNotification(terre.idTerrain)">
+                        Mark as Checked
+                      </button>
+                    </td>
+                
+                    <!-- Ajout du pad de signature avec affichage dynamique -->
+              
+                  </tr>
                 </tbody>
+                
               </table>
+              
               <!-- End Table with stripped rows -->
 
             </div>
@@ -546,6 +501,33 @@
 
         </div>
       </div>
+
+
+      <!-- Bootstrap Modal Centrée -->
+<!-- Bootstrap Modal Centrée avec Texte Plus Grand -->
+<div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">  
+    <div class="modal-content text-center"> 
+      <div class="modal-header">
+        <h5 class="modal-title fs-3 fw-bold" id="warningModalLabel">⚠️ Attention</h5> <!-- Plus gros titre -->
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="fs-4 fw-semibold text-danger">❌ Vous ne pouvez pas créer un contrat tant que tous les papiers ne sont pas validés.</p> <!-- Texte agrandi -->
+      </div>
+      <div class="modal-footer d-flex justify-content-center"> 
+        <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">OK</button> <!-- Bouton plus grand -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Delete Button -->
+
+
     </section>
     <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -558,33 +540,31 @@
             <form>
               <!-- Field for Nom -->
               <div class="mb-3">
-                <label for="inputNom" class="form-label">Nom</label>
-                <input type="text" class="form-control" id="inputNom" [(ngModel)]="Terrain.nom" name="nom">
+                <label for="inputNom" class="form-label fw-bold fs-5">Type_Terrain</label>
+                <textarea class="form-control" id="inputNom" [(ngModel)]="Terrain.nom" name="nom" rows="3"></textarea>
               </div>
     
               <!-- Field for Localisation -->
               <div class="mb-3">
-                <label for="inputLocalisation" class="form-label">Localisation</label>
-                <input type="text" class="form-control" id="inputLocalisation" [(ngModel)]="Terrain.localisation" name="localisation">
+                <label for="inputLocalisation" class="form-label fw-bold fs-5">Localisation</label>
+                <textarea class="form-control" id="inputLocalisation" [(ngModel)]="Terrain.localisation" name="localisation" rows="3"></textarea>
               </div>
     
               <!-- Field for Superficie -->
               <div class="mb-3">
-                <label for="inputSuperficie" class="form-label">Superficie</label>
+                <label for="inputSuperficie" class="form-label fw-bold fs-5">Superficie</label>
                 <input type="number" class="form-control" id="inputSuperficie" [(ngModel)]="Terrain.superficie" name="superficie">
               </div>
     
               <!-- Field for Statut Juridique -->
               <div class="mb-3">
-                <label for="inputStatutJuridique" class="form-label">Statut Juridique</label>
-                <input type="text" class="form-control" id="inputStatutJuridique" [(ngModel)]="Terrain.statutJuridique" name="statutJuridique">
+                <label for="inputStatutJuridique" class="form-label fw-bold fs-5">Statut Juridique</label>
+                <textarea class="form-control" id="inputStatutJuridique" [(ngModel)]="Terrain.statutJuridique" name="statutJuridique" rows="3"></textarea>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-           
-
-            <button type="button" class="btn btn-primary" (click)="updateData()">Sauvegarder</button>
+            <button type="button" class="btn btn-info text-white" (click)="updateData()">Sauvegarder</button>
           </div>
         </div>
       </div>
