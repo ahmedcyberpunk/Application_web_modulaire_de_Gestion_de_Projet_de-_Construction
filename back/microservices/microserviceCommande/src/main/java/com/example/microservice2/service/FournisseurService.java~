@@ -1,0 +1,53 @@
+package com.example.microservice2.service;
+
+import com.example.microservice2.entity.Fournisseurs;
+import com.example.microservice2.repository.CartRessourceRepository;
+import com.example.microservice2.repository.CommandeRepo;
+import com.example.microservice2.repository.FournisseursRepo;
+import com.example.microservice2.repository.RessourceRepo;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@AllArgsConstructor
+@Transactional
+public class FournisseurService implements FournisseurInter {
+
+    private final CommandeRepo commandeRepo;
+    private final FournisseursRepo fournisseursRepo;
+    private final RessourceRepo ressourceRepo;
+    private final CartRessourceRepository cartRessourceRepository;
+
+    public Fournisseurs Adder(Fournisseurs fournisseurs) {
+        return fournisseursRepo.save(fournisseurs);
+    }
+
+    public Fournisseurs getFournisseur(long id) {
+        return fournisseursRepo.findById(id).orElseThrow(() -> new RuntimeException("Fournisseur non trouvé"));
+    }
+
+    @Transactional
+    public void Supprimerfournisseur(Long fournisseurId) {
+        // Étape 1 : Supprimer les associations dans cart_ressource
+        cartRessourceRepository.deleteByRessourceFournisseurId(fournisseurId);
+
+        // Étape 2 : Supprimer les ressources associées au fournisseur
+        ressourceRepo.deleteByFournisseurId(fournisseurId);
+
+        // Étape 3 : Supprimer le fournisseur
+        fournisseursRepo.deleteById(fournisseurId);
+    }
+
+
+    public void Modifier(Fournisseurs fournisseurs) {
+        fournisseursRepo.save(fournisseurs);
+    }
+
+    @Override
+    public List<Fournisseurs> getAllFournisseur() {
+        return fournisseursRepo.findAll();
+    }
+}

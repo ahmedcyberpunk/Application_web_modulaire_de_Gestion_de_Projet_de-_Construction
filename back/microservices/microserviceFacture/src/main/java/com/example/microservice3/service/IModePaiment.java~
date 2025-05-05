@@ -1,0 +1,4 @@
+package com.example.microservice3.service;
+
+public interface IModePaiment {
+}

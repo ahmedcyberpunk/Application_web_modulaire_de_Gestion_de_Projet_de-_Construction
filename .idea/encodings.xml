@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/back/eureka/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/back/gatway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/back/microservices/microservceRh/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/back/microservices/microserviceAdministration/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/back/microservices/microserviceCommande/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/back/microservices/microserviceFacture/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/back/microservices/microserviceProjet/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/back/microservices/microserviceSafety/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/back/microservices/microserviceUser/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eureka/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gatway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservices/microserviceAdministration/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/microservices/microserviceUser/src/main/java" charset="UTF-8" />
+  </component>
+</project>

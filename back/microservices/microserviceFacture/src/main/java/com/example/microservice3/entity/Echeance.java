@@ -1,0 +1,39 @@
+package com.example.microservice3.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@ToString
+public class Echeance {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idEcheance;
+
+    @Temporal(TemporalType.DATE)
+    private Date dateLimite;
+
+    private BigDecimal montantDu;
+
+    @Enumerated(EnumType.STRING)
+    private StatutEcheance statut;
+
+    // Plusieurs échéances sont liées à une seule facture
+    @ManyToOne
+    @JoinColumn(name = "facture_id")
+    private Facture facture;
+
+    // Une échéance peut être payée par un seul paiement
+    @ManyToOne
+    @JsonIgnore
+    private Paiement paiement; // This defines the "paiement" side of the relationship
+}
