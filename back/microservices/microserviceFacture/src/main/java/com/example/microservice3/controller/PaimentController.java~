@@ -1,0 +1,55 @@
+package com.example.microservice3.controller;
+
+import com.example.microservice3.entity.Paiement;
+import com.example.microservice3.service.PaiementService;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/paiement")
+@CrossOrigin(origins = "http://localhost:4200")
+@AllArgsConstructor
+public class PaimentController {
+
+    private final PaiementService modePaiementService;
+
+    // Endpoint to add a paiement
+    @PostMapping("/addpaiement")
+    public ResponseEntity<Paiement> addModePaiement(@RequestBody Paiement modePaiement) {
+        // Call the service layer to add a paiement
+        Paiement addedModePaiement = modePaiementService.addModePaiement(modePaiement);
+        return ResponseEntity.ok(addedModePaiement);  // Return the added paiement as the response
+    }
+
+    // Endpoint to delete a paiement by ID
+    @DeleteMapping("/deletepaiement/{id}")
+    public ResponseEntity<String> deletePaiement(@PathVariable("id") Integer id) {
+        modePaiementService.deleteModePaiement(id);  // Call service to delete the paiement
+        return new ResponseEntity<>("Paiement supprimé avec succès", HttpStatus.NO_CONTENT);  // Success response
+    }
+
+    // Endpoint to get all paiements
+    @GetMapping("/paiementall")
+    public ResponseEntity<List<Paiement>> getAllModesPaiement() {
+        List<Paiement> modesPaiement = modePaiementService.getAllModesPaiement();  // Call service to get all paiements
+        return ResponseEntity.ok(modesPaiement);  // Return the list of paiements
+    }
+
+    // Endpoint to get paiement by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Paiement> getModePaiement(@PathVariable Integer id) {
+        Paiement modePaiement = modePaiementService.getModePaiement(id);  // Call service to get paiement by ID
+        return ResponseEntity.ok(modePaiement);  // Return the paiement
+    }
+
+    // Endpoint to update a paiement
+    @PutMapping("/updatepaiement/{id}")
+    public ResponseEntity<Paiement> updatePaiement(@PathVariable("id") Integer id, @RequestBody Paiement paiement) {
+        Paiement updatedPaiement = modePaiementService.updatePaiement(id, paiement);  // Call service to update paiement
+        return new ResponseEntity<>(updatedPaiement, HttpStatus.OK);  // Return the updated paiement
+    }
+}

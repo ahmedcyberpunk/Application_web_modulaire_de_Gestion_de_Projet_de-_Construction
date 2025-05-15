@@ -1,0 +1,54 @@
+package com.example.microservice2.service;
+
+import com.example.microservice2.entity.Ressource;
+import com.example.microservice2.entity.Fournisseurs;
+import com.example.microservice2.repository.CommandeRepo;
+import com.example.microservice2.repository.FournisseursRepo;
+import com.example.microservice2.repository.RessourceRepo;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@AllArgsConstructor
+@Transactional
+public class RessourceService implements RessourceInter {
+
+    private final CommandeRepo commandeRepo;
+    private final FournisseursRepo fournisseursRepo;
+    private final RessourceRepo ressourceRepo;
+
+    public Ressource adderr(Ressource ressource) {
+        return ressourceRepo.save(ressource);
+        }
+
+
+
+    public Ressource getRessource(long id) {
+        return ressourceRepo.findById(id)
+                .filter(Ressource::isActive) // Ne retourne que si la ressource est active
+                .orElseThrow(() -> new RuntimeException("Ressource non trouvée ou désactivée"));
+    }
+
+    public void SupprimerRessource(long id) {
+        Ressource ressource = ressourceRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Ressource non trouvée"));
+
+        ressource.setActive(false); // Marquer comme inactif au lieu de supprimer
+        ressourceRepo.save(ressource);
+    }
+
+    public void ModifierRessource(Ressource ressource) {
+        if (!ressourceRepo.existsById(ressource.getIdProduit())) {
+            throw new RuntimeException("Ressource non trouvée");
+        }
+        ressourceRepo.save(ressource);
+    }
+
+
+    public List<Ressource> getAllRessource() {
+        return ressourceRepo.findAll();
+    }
+}

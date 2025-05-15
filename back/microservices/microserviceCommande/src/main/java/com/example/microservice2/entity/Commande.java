@@ -1,0 +1,65 @@
+package com.example.microservice2.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import java.util.Date;
+import java.util.List;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@ToString
+@EqualsAndHashCode
+public class Commande {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idCommande;
+
+    @Temporal(TemporalType.DATE)
+    private Date dateCommande;
+    private String username;
+    public Long iduser;
+
+    private double clientLat;
+    private double clientLng;
+    private double livreurLat;
+    private double livreurLng;
+    @Enumerated(EnumType.STRING)  // Stocke sous forme de texte
+    @Column(name = "etat_commande", nullable = false, length = 20)
+    private EtatCommande etatCommande;
+
+    // Champ pour stocker les ressources sous forme de chaîne JSON
+    @Lob
+    private String ressourcesJson;
+
+    @Temporal(TemporalType.DATE)
+    private Date dateLivraisonPrevue; // Date estimée de livraison
+
+    @Temporal(TemporalType.DATE)
+    private Date dateReception; // Date réelle de réception
+
+    public boolean isEnRetard() {
+        if (dateLivraisonPrevue == null) {
+            return false;
+        }
+        return dateReception == null && new Date().after(dateLivraisonPrevue);
+    }
+
+    // Mettre à jour l'état de la commande
+    public void updateEtatCommande() {
+        if (dateReception != null) {
+            etatCommande = EtatCommande.RECUE;
+        } else if (isEnRetard()) {
+            etatCommande = EtatCommande.EN_RETARD;
+        } else {
+            etatCommande = EtatCommande.EN_COURS;
+        }
+    }
+}
